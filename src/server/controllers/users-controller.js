@@ -1,11 +1,11 @@
 const encryption = require('../utilities/encryption');
 const User = require('mongoose').model('User');
 const constants = require('../utilities/constants');
+const jwt = require('jsonwebtoken');
+
+// https://blog.angular-university.io/angular-jwt-authentication/
 
 module.exports = {
-    registerGet: (req, res) => {
-        return res.render('users/register');
-    },
     registerPost: (req, res) => {
         let reqUser = req.body;
         // Add validations here!
@@ -20,52 +20,57 @@ module.exports = {
             salt: salt,
             hashedPass: hashedPassword
         }).then(user => {
-            req.logIn(user, (err, user) => {
+            req.logIn(user, (err, success) => {
                 if (err) {
-                    res.locals.globalError = err;
-                    return res.render('users/register', user);
+                    return res.status(400).send({error: err.message});
                 }
 
-                req.tempData.set(constants.SUCCESS_MESSAGE, 'Successfully logged in.');
-                return res.redirect('/');
+                return res.status(200);
             });
         });
     },
-    loginGet: (req, res) => {
-        return res.render('users/login');
-    },
     loginPost: (req, res) => {
-        // first way with with passport.authenticate('local', { failureRedirect: '/users/login' }) added in the route for loginPost and here just add a simple line: res.redirect('/');
         let reqUser = req.body;
         User
             .findOne({ username: reqUser.username }).then(user => {
-                // can be done with redirect and tempdata
                 if (!user) {
-                    res.locals.globalError = 'Invalid user data';
-                    return res.render('users/login');
+                    return res.status(400).send({error: constants.INVALID_USER_DATA});
                 }
 
                 if (!user.authenticate(reqUser.password)) {
-                    res.locals.globalError = 'Invalid user data';
-                    return res.render('users/login');
+                    return res.status(400).send({error: constants.INVALID_USER_DATA});
                 }
 
-                req.logIn(user, (err, user) => {
+                req.logIn(user, (err, success) => {
                     if (err) {
-                        res.locals.globalError = err;
-                        return res.render('users/login');
+                        return res.status(500).send({error: err.message});
                     }
 
-                    return res.redirect('/');
+                    const expirationOneHour = Math.floor(Date.now() / 1000) + (60 * 60);
+                    
+                    // generate token
+                    const jwtBearerToken = jwt.sign({}, constants.PRIVATE_KEY, {
+                        algorithm: 'HS256',
+                        expiresIn: expirationOneHour,
+                        subject: String(user._id),
+                    });
+
+                    // if decide to use cookies
+                    // secure true - means sends data back only if its https connection !
+                    // httpOnly true - means that cookie wont be accessible from javascript code at all !
+                    // res.cookie('SESSIONID', jwtBearerToken, {httpOnly: false, secure: false});
+
+                    // send the JWT back to the user within the http response 
+                    return res.status(200).send({
+                        token: jwtBearerToken,
+                        expiration: expirationOneHour,
+                        roles: user.roles 
+                    });
                 });
             });
     },
     logout: (req, res) => {
         req.logout();
-        req.tempData.set(constants.SUCCESS_MESSAGE, 'Successfully logged out.');
-        return res.redirect("/");
-    },
-    adminPage: (req, res) => {
-        return res.render('users/example-admin-page');
+        return res.status(205);
     }
 };

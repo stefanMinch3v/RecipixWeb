@@ -1,4 +1,4 @@
 module.exports = {
-    SUCCESS_MESSAGE: 'success',
-    ERROR_MESSAGE: 'error'
+    INVALID_USER_DATA: 'Invalid user data.',
+    PRIVATE_KEY: 'some-secret-word!@#$%'
 };
