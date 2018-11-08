@@ -8,7 +8,10 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     registerPost: (req, res) => {
         let reqUser = req.body;
-        // Add validations here!
+
+        if (!validateUserData(reqUser)) {
+            return res.status(400).send({error: constants.INVALID_USER_LENGTH});
+        }
 
         let salt = encryption.generateSalt();
         let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password);
@@ -31,6 +34,11 @@ module.exports = {
     },
     loginPost: (req, res) => {
         let reqUser = req.body;
+
+        if (!validateUserData(reqUser)) {
+            return res.status(400).send({error: constants.INVALID_USER_DATA});
+        }
+
         User
             .findOne({ username: reqUser.username }).then(user => {
                 if (!user) {
@@ -74,3 +82,14 @@ module.exports = {
         return res.status(205);
     }
 };
+
+function validateUserData(user) {
+    if (!user.username 
+        || !user.password 
+        || user.username.length < 5
+        || user.password.length < 5) {
+        return false;
+    }
+
+    return true;
+}
