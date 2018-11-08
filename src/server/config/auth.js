@@ -1,3 +1,6 @@
+const constants = require('../utilities/constants');
+const jwt = require('jsonwebtoken');
+
 module.exports = {
     isAuthenticated: (req, res, next) => {
         if (req.isAuthenticated()) {
@@ -18,5 +21,17 @@ module.exports = {
                 return res.status(401);
             }
         };
+    },
+    VerifyBearerToken: (req, res, next) => {
+        const token = req.headers.authorization.substring(7, req.headers.authorization.length);
+        jwt.verify(token, constants.PRIVATE_KEY);
+
+        next();
+    },
+    HandleErrorDataForToken: (err, req, res, next) => {
+        // handle invalid json web token
+        if (err.name === 'JsonWebTokenError') {
+            res.status(401).send({error: 'Invalid token...'});
+        }
     }
 };

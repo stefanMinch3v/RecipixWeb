@@ -3,7 +3,7 @@ const User = require('mongoose').model('User');
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
 
-// https://blog.angular-university.io/angular-jwt-authentication/
+// Jwt from - https://blog.angular-university.io/angular-jwt-authentication/
 
 module.exports = {
     registerPost: (req, res) => {
@@ -62,7 +62,7 @@ module.exports = {
                         expiresIn: expirationOneHour,
                         subject: String(user._id),
                     });
-
+                    
                     // if decide to use cookies
                     // secure true - means sends data back only if its https connection !
                     // httpOnly true - means that cookie wont be accessible from javascript code at all !
@@ -77,10 +77,10 @@ module.exports = {
                 });
             });
     },
-    logout: (req, res) => {
-        req.logout();
-        return res.status(205);
-    }
+    // logout: (req, res) => {
+    //     req.logout();
+    //     return res.status(205);
+    // }
 };
 
 function validateUserData(user) {
