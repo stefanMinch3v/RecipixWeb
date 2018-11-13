@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutesModule } from './app.routes.module';
 import { AccountModule } from './components/account/account.module';
@@ -12,6 +14,8 @@ import { AuthGuard } from './core/services/guards/auth.guard';
 import { AdminGuard } from './core/services/guards/admin.guard';
 
 import { TokenInterceptor } from './core/services/interceptors/token.interceptor';
+import { ErrorInterceptor } from './core/services/interceptors/error.interceptor';
+import { environment } from 'client/environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,15 +25,14 @@ import { TokenInterceptor } from './core/services/interceptors/token.interceptor
     BrowserModule,
     AppRoutesModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(environment.toastr),
     AccountModule,
     SharedModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }, 
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, 
     AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })

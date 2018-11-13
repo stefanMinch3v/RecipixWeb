@@ -23,7 +23,9 @@
               "client/assets"
             ],
             "styles": [
-              "client/styles.css"
+              "client/styles.css",
+              "client/assets/bootstrap.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
