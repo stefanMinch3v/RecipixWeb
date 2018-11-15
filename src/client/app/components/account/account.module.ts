@@ -7,7 +7,7 @@ import { AccountRoutesModule } from './account.routes.module';
 import { AccountService } from '../../core/services/account/account.service';
 import { AuthService } from '../../core/services/auth.service';
 
-import { AnonymousGuard } from 'client/app/core/services/guards/anonymous.guard';
+import { AnonymousGuard } from '../../core/services/guards/anonymous.guard';
 import { accountComponents } from '.';
 
 @NgModule({
