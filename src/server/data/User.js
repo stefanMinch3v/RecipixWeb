@@ -7,6 +7,7 @@ let userSchema = new mongoose.Schema({
     username: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
     firstName: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
     lastName: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
+    email: { type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true },
     salt: String,
     hashedPass: String,
     roles: [String]
@@ -35,6 +36,7 @@ module.exports.seedAdminUser = () => {
             username: 'admin',
             firstName: 'admin',
             lastName: 'admin',
+            email: 'admin@mail.com',
             salt: salt,
             hashedPass: hashedPass,
             roles: ['Admin']

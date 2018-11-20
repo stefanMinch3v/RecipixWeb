@@ -1,19 +1,15 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from '../auth.service';
 
 import { environment } from '../../../../environments/environment';
-import { map }  from 'rxjs/operators';
-import { AccountLoginModel } from '../../models/account/account-login.input.model';
 
 @Injectable()
 export class AccountService {
     constructor(
         private http: HttpClient,
-        private authService: AuthService,
-        private router: Router) { }
+        private authService: AuthService) { }
 
     public login(user) {
         const url = environment.localhost.url + '/account/login';
@@ -27,7 +23,5 @@ export class AccountService {
 
     public logout() {
         this.authService.deauthenticateUser();
-
-        this.router.navigate(['/']);
     }
 }

@@ -8,9 +8,10 @@ const jwt = require('jsonwebtoken');
 module.exports = {
     registerPost: (req, res) => {
         let reqUser = req.body;
+        const userValidationInfo = validateUserRegisterData(reqUser);
 
-        if (!validateUserData(reqUser)) {
-            return res.status(400).send({error: constants.INVALID_USER_LENGTH});
+        if (!userValidationInfo.success) {
+            return res.status(400).send(userValidationInfo.errors);
         }
 
         let salt = encryption.generateSalt();
@@ -20,6 +21,7 @@ module.exports = {
             username: reqUser.username,
             firstName: reqUser.firstName,
             lastName: reqUser.lastName,
+            email: reqUser.email,
             salt: salt,
             hashedPass: hashedPassword
         }).then(user => {
@@ -28,19 +30,27 @@ module.exports = {
                     return res.status(400).send({error: err.message});
                 }
 
-                return res.status(200);
+                return res.status(200).end();
             });
+        }).catch(err => {
+            if (err.message.includes(constants.DUPLICATE_KEY_DB)) {
+                return res.status(400).send({error: constants.DUPLICATE_USERNAME_OR_EMAIL});
+            }
+
+            return res.status(400).send({error: err.message});
         });
     },
     loginPost: (req, res) => {
         let reqUser = req.body;
+        const userValidationInfo = validateUserLoginData(reqUser);
 
-        if (!validateUserData(reqUser)) {
-            return res.status(400).send({error: constants.INVALID_USER_DATA});
+        if (!userValidationInfo.success) {
+            return res.status(400).send(userValidationInfo.errors);
         }
 
         User
-            .findOne({ username: reqUser.username }).then(user => {
+            .findOne({ username: reqUser.username })
+            .then(user => {
                 if (!user) {
                     return res.status(400).send({error: constants.INVALID_USER_DATA});
                 }
@@ -75,21 +85,75 @@ module.exports = {
                         roles: user.roles 
                     });
                 });
+            })
+            .catch(err => {
+                return res.status(400).send({error: err.message});
             });
     },
     // logout: (req, res) => {
     //     req.logout();
-    //     return res.status(205);
+    //     return res.status(205).end();
     // }
 };
 
-function validateUserData(user) {
-    if (!user.username 
-        || !user.password 
-        || user.username.length < 5
-        || user.password.length < 5) {
-        return false;
+function validateUserLoginData(user) { 
+    const errors = {}; 
+    let validData = true;
+
+    if (!user.username || user.username.length < 5) {
+        errors.username = constants.INVALID_USERNAME_LENGTH;
+        validData = false;
     }
 
-    return true;
+    if (!user.password || user.password.length < 5) {
+        errors.password = constants.INVALID_PASSWORD_LENGTH;
+        validData = false;
+    }
+
+    return {
+        success: validData,
+        errors
+    };
+}
+
+function validateUserRegisterData(user) {
+    const errors = {}; 
+    let validData = true;
+
+    if (!user.username || user.username.length < 5) {
+        errors.username = constants.INVALID_USERNAME_LENGTH;
+        validData = false;
+    }
+
+    if (!user.password || user.password.length < 5) {
+        errors.password = constants.INVALID_PASSWORD_LENGTH;
+        validData = false;
+    }
+
+    if (!user.firstName || user.firstName.length < 2) {
+        errors.firstName = constants.INVALID_FIRSTNAME_LENGTH;
+        validData = false;
+    }
+
+    if (!user.lastName || user.lastName.length < 2) {
+        errors.lastName = constants.INVALID_LASTNAME_LENGTH;
+        validData = false;
+    }
+
+    if (user.password !== user.passwordConfirmation) {
+        errors.passwordConfirmation = constants.INVALID_PASSWORD_RESEMBLANCE;
+        validData = false;
+    }
+
+    const emailPattern = /\S+@\S+\.\S+/;
+    const isValidEmail = emailPattern.test(user.email);
+    if (!user.email || !isValidEmail) {
+        errors.email = constants.INVALID_EMAIL_ADDRESS;
+        validData = false;
+    }
+
+    return {
+        success: validData,
+        errors
+    };
 }

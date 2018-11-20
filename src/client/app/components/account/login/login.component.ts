@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 
 import { AccountService } from '../../../core/services/account/account.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from 'client/app/core/services/notification.service';
 
 import { AccountLoginModel } from '../../../core/models/account/account-login.input.model';
 
+import { notificationMessages } from '../../../core/constants/notification-messages.constants';
 
 @Component({
     selector: 'login',
@@ -17,15 +19,14 @@ export class LoginComponent implements OnInit {
     constructor(
         private accountService: AccountService,
         private authService: AuthService,
-        private router: Router) { }
+        private router: Router,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.user = new AccountLoginModel();
     }
 
     public login(): void {
-        // validate user details
-        
         this.accountService.login(this.user)
             .subscribe(res => {
                 this.authService.authenticateUser(res['token']);
@@ -33,8 +34,8 @@ export class LoginComponent implements OnInit {
                 this.authService.saveRoles(res['roles']);
                 this.authService.saveExpirationTime(res['expiration']);
                 
+                this.notificationService.successMessage(notificationMessages.successLogin);
                 this.router.navigate(['/']);
-            },
-            error => console.log(error.error)); // handle error
+            });
     }
 }

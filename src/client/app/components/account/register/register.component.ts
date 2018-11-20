@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../../core/services/account/account.service';
 
 import { AccountRegisterModel } from '../../../core/models/account/account-register.input.model';
+import { NotificationService } from 'client/app/core/services/notification.service';
+
+import { notificationMessages } from '../../../core/constants/notification-messages.constants';
 
 @Component({
     selector: 'register',
@@ -12,18 +15,20 @@ import { AccountRegisterModel } from '../../../core/models/account/account-regis
 export class RegisterComponent implements OnInit {
     private user: AccountRegisterModel;
 
-    constructor(private accountService: AccountService, private router: Router) { }
+    constructor(
+        private accountService: AccountService, 
+        private router: Router,
+        private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.user = new AccountRegisterModel();
     }
 
     public register(): void {
-        // validate user data
-        
         this.accountService.register(this.user)
-            .subscribe(
-                success => this.router.navigate(['/account/login']),// handle success
-                error => console.log(error.error));// handle error
+            .subscribe(() => {
+                this.notificationService.successMessage(notificationMessages.successRegistration);
+                this.router.navigate(['/account/login'])
+            });
     }
 }

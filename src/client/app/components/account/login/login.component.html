@@ -3,17 +3,22 @@
     <div>
         <label for="username">Username:</label>
         <input type="text"
+               minlength="5"
                class="form-control"
                id="username"
                name="username"
-               #email="ngModel"
+               #username="ngModel"
                [(ngModel)]="user.username"
                required />
+        <div class="alert text-danger" [hidden]="username.valid || username.pristine">
+            Username must be at least 5 symbols long!
+        </div>
     </div>
 
     <div>
         <label for="password">Password:</label>
         <input type="password"
+               minlength="5"
                class="form-control"
                id="password"
                name="password"
@@ -21,7 +26,9 @@
                [(ngModel)]="user.password"
                required />
     </div>
-
+    <div class="alert text-danger" [hidden]="password.valid || password.pristine">
+        Password must be at least 5 symbols long!
+    </div>
     <button type="submit"
             [disabled]="!loginForm.form.valid">
         Login
