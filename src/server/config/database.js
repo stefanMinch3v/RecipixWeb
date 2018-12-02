@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const User = require('../data/User');
 
+require('../data/Comment');
+require('../data/Recipe');
+
 // mongoose.Promise = global.Promise; not needed anymore due to the new updates
 module.exports = (settings) => {
     mongoose.connect(settings.db, { useNewUrlParser: true });
