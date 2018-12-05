@@ -118,3 +118,6 @@ typings/
 !.vscode/extensions.json
 
 # End of https://www.gitignore.io/api/node,angular,visualstudiocode
+
+sensitiveData.json
+launch.json
