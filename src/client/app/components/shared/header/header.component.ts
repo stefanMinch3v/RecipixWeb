@@ -10,7 +10,7 @@ import { notificationMessages } from '../../../core/constants/notification-messa
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+    styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent {
     constructor(

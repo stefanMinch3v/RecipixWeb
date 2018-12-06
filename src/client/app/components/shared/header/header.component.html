@@ -1,27 +1,63 @@
-﻿<nav>
-    <a routerLink="/">Home</a>
-    <div>
-        <ul>
-            <!-- Authenticated -->
-            <!-- Current User -->
-            <li *ngIf="isUserAuth()">
-                <p>Hello, {{authService.getUser()}}</p>
-            </li>
-        </ul>
-        <ul>
-            <!-- Anonymous -->
-            <!-- Login -->
-            <li *ngIf="!isUserAuth()">
-                <a routerLink="/account/login">Login</a>
-            </li>
-            <!-- Register -->
-            <li *ngIf="!isUserAuth()">
-                <a routerLink="/account/register">Register</a>
-            </li>
-            <!-- Logout -->
-            <li *ngIf="isUserAuth()">
-                <a (click)="logout()" class="nav-link">Logout</a>
-            </li>
-        </ul>
-    </div>
+﻿<nav class="menu">
+    <ol>
+        <li class="menu-item">
+            <a routerLink="/">Home</a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="/">About</a>
+        </li>
+        <li class="menu-item">
+            <a routerLink="/">Recipes</a>
+            <ol class="sub-menu">
+                <li class="menu-item">
+                    <a routerLink="/">Home-made</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/">Vegetarians</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/">Raw meat</a>
+                </li>
+            </ol>
+        </li>
+        <li class="menu-item">
+            <a routerLink="/">Season recipes</a>
+            <ol class="sub-menu">
+                <li class="menu-item">
+                    <a routerLink="/">Summer</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/">Fall</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/">Winter BBQs</a>
+                </li>
+            </ol>
+        </li>
+        <li class="menu-item">
+            <a routerLink="/">Contact</a>
+        </li>
+        <li class="menu-item" *ngIf="!isUserAuth()">
+            <a routerLink="/">Account</a>
+            <ol class="sub-menu">
+                <li class="menu-item">
+                    <a routerLink="/account/login">Login</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/account/register">Register</a>
+                </li>
+            </ol>
+        </li>
+        <li class="menu-item" *ngIf="isUserAuth()">
+            <a routerLink="">Hello, {{authService.getUser()}}</a>
+            <ol class="sub-menu">
+                <li class="menu-item">
+                    <a routerLink="/">Profile</a>
+                </li>
+                <li class="menu-item">
+                    <a (click)="logout()" routerLink="">Logout</a>
+                </li>
+            </ol>
+        </li>
+    </ol>
 </nav>
