@@ -28,6 +28,7 @@
     "express": "4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "1.15.6",
+    "font-awesome": "^4.7.0",
     "jsonwebtoken": "8.3.0",
     "mongoose": "5.2.7",
     "ngx-toastr": "9.1.1",
