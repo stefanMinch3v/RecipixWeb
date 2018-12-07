@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutesModule } from './app.routes.module';
 import { AccountModule } from './components/account/account.module';
 import { SharedModule } from './components/shared/shared.module';
+import { RecipesModule } from './components/recipes/recipes.module';
 
 import { AppComponent } from './app.component';
 
@@ -28,7 +29,8 @@ import { environment } from 'client/environments/environment';
     BrowserAnimationsModule,
     ToastrModule.forRoot(environment.toastr),
     AccountModule,
-    SharedModule
+    SharedModule,
+    RecipesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
