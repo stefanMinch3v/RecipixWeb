@@ -11,6 +11,8 @@ let recipeSchema = new mongoose.Schema({
     category: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
     rating: { type: Number },
     raitingVotes: { type: Number },
+    cookingTime: { type: Number },
+    servings: { type: Number },
     comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Comment' }],
     user: { type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: REQUIRED_VALIDATION_MESSAGE }
 });
