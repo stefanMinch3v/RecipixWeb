@@ -7,6 +7,16 @@ module.exports = (app) => {
     app.post('/api/account/login', controllers.users.loginPost);
     //app.get('/api/account/logout', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.users.logout);
 
+    // recipes api
+    app.post('/api/recipes/create', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.create);
+    app.get('/api/recipes/edit/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.editGet);
+    app.post('/api/recipes/edit', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.editPost);
+    app.get('/api/recipes/all', controllers.recipes.all);
+    app.get('/api/recipes/details/:id', controllers.recipes.details);
+
+    // ingredients api primary for search
+    // TODO
+
     // admin api
     // app.get('/api/account/example-admin-page', auth.isInRole('Admin'), controllers.users.adminPage);
 
