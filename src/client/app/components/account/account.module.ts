@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { AccountRoutesModule } from './account.routes.module';
+import { AccountRoutingModule } from './account-routing.module';
 
 import { AccountService } from '../../core/services/account/account.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -11,7 +11,7 @@ import { AnonymousGuard } from '../../core/services/guards/anonymous.guard';
 import { accountComponents } from '.';
 
 @NgModule({
-    imports: [CommonModule, AccountRoutesModule, FormsModule],
+    imports: [CommonModule, AccountRoutingModule, FormsModule],
     declarations: [...accountComponents],
     providers: [AccountService, AuthService, AnonymousGuard]
 })
