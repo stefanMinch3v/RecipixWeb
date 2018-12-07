@@ -3,6 +3,7 @@ const User = require('../data/User');
 
 require('../data/Comment');
 require('../data/Recipe');
+require('../data/Ingredient');
 
 // mongoose.Promise = global.Promise; not needed anymore due to the new updates
 module.exports = (settings) => {

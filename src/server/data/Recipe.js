@@ -7,9 +7,12 @@ let recipeSchema = new mongoose.Schema({
     ingredients: { type: String, required: REQUIRED_VALIDATION_MESSAGE, index: true },
     description: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
     dateOfAdded: { type: mongoose.SchemaTypes.Date, required: true, default: Date.now },
-    imagePath: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
+    imageUrl: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
     category: { type: String, required: REQUIRED_VALIDATION_MESSAGE },
-    comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Comment' }]
+    rating: { type: Number },
+    raitingVotes: { type: Number },
+    comments: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Comment' }],
+    user: { type: mongoose.SchemaTypes.ObjectId, ref: 'User', required: REQUIRED_VALIDATION_MESSAGE }
 });
 
 let Recipe = mongoose.model('Recipe', recipeSchema);
