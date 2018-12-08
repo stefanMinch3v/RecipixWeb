@@ -23,7 +23,19 @@ module.exports = {
         };
     },
     VerifyBearerToken: (req, res, next) => {
-        const token = req.headers.authorization.split(" ")[1];
+        let collectionToken = req.headers.authorization;
+        if (!collectionToken) {
+            return res.status(401).send({error: constants.INVALID_TOKEN});
+        }
+
+        collectionToken = collectionToken.split(" ");
+
+        const bearerName = collectionToken[0];
+        if (bearerName !== 'Bearer') {
+            return res.status(401).send({error: constants.INVALID_TOKEN});
+        }
+
+        const token = collectionToken[1];
         jwt.verify(token, constants.PRIVATE_KEY);
 
         next();
@@ -31,7 +43,7 @@ module.exports = {
     HandleErrorDataForToken: (err, req, res, next) => {
         // handle invalid json web token
         if (err.name === 'JsonWebTokenError') {
-            res.status(401).send({error: 'Invalid token...'});
+            res.status(401).send({error: constants.INVALID_TOKEN});
         }
     }
 };
