@@ -1,3 +1,125 @@
-<p>
-  recipe-create works!
-</p>
+<h4>Submit new recipe</h4>
+<form #createForm="ngForm" (submit)="create()" class="col-md-4">
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input class="form-control"
+               type="text"
+               minlength="3"
+               id="title"
+               name="title"
+               #title="ngModel"
+               [(ngModel)]="recipeCreateModel.title"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="title.valid || title.pristine">
+        Title must be at least 3 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control"
+               type="text"
+               minlength="3"
+               id="description"
+               name="description"
+               #description="ngModel"
+               [(ngModel)]="recipeCreateModel.description"
+               rows="6"
+               required>
+        </textarea>
+    </div>
+    <div class="alert text-danger" [hidden]="description.valid || description.pristine">
+        Description must be at least 3 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="ingredients">Ingredients (use comma separator between each one):</label>
+        <input class="form-control"
+              type="text"
+              minlength="3"
+              id="ingredients"
+              name="ingredients"
+              #ingredients="ngModel"
+              [(ngModel)]="recipeCreateModel.ingredients"
+              required />
+    </div>
+    <div class="alert text-danger" [hidden]="ingredients.valid || ingredients.pristine">
+        The ingredients must be at least 3 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <input class="form-control"
+               type="text"
+               minlength="3"
+               id="category"
+               name="category"
+               #category="ngModel"
+               [(ngModel)]="recipeCreateModel.category"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="category.valid || category.pristine">
+        Category must be at least 3 symbols long!
+    </div>
+
+    <div class="form-group"> 
+        <label for="cookingTime">Cooking time (in minutes):</label>
+        <input class="form-control"
+               type="number"
+               min="1"
+               id="cookingTime"
+               name="cookingTime"
+               #cookingTime="ngModel"
+               [(ngModel)]="recipeCreateModel.cookingTime"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="cookingTime.valid || cookingTime.pristine">
+        Cooking time must be at least 1 minute!
+    </div>
+
+    <div class="form-group">
+        <label for="servings">Servings:</label>
+        <input class="form-control"
+               type="number"
+               min="1"
+               max="20"
+               id="servings"
+               name="servings"
+               #servings="ngModel"
+               [(ngModel)]="recipeCreateModel.servings"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="servings.valid || servings.pristine">
+        Servings must be between 1 and 20 people!
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image url:</label>
+      <input class="form-control"
+             type="text"
+             minlength="10"
+             id="imageUrl"
+             name="imageUrl"
+             #imageUrl="ngModel"
+             [(ngModel)]="recipeCreateModel.imageUrl"
+             required />
+    </div>
+    <div class="alert text-danger" [hidden]="imageUrl.valid || imageUrl.pristine">
+        Image url must be at least 10 symbols, the image will be displaied below.
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <img
+          class="img-responsive"
+          *ngIf="recipeCreateModel.imageUrl"
+            src="{{recipeCreateModel.imageUrl}}"
+          >
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"
+            [disabled]="createForm.form.invalid">
+        Submit
+    </button>
+</form>

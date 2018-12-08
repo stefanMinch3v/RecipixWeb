@@ -121,7 +121,9 @@ function parseIngredientsData(ingredients) {
         validData = false;
         errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
     } else {
-        result = ingredients.split(/[\s,]+/);
+        result = ingredients
+            .split(",")
+            .map(el => el.trim());
 
         if (result.length == 0) {
             validData = false;

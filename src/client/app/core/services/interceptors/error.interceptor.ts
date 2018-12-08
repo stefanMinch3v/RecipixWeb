@@ -12,8 +12,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(catchError((error: HttpErrorResponse) => {
                 let errorMsg = '';
-                for (let [key, value] of Object.entries(error.error)) {
-                    errorMsg += value;
+
+                if (error.statusText == "Unknown Error") {
+                    errorMsg += "Server is down!"
+                }
+                else {
+                    for (let [key, value] of Object.entries(error.error)) {
+                        errorMsg += value;
+                    }
                 }
 
                 this.notificationService.errorMessage(errorMsg);
