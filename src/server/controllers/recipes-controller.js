@@ -3,6 +3,7 @@ const User = require('mongoose').model('User');
 const Ingredient = require('mongoose').model('Ingredient');
 const ObjectId = require('mongoose').Types.ObjectId;
 const constants = require('../utilities/constants');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     create: (req, res) => {
@@ -18,8 +19,8 @@ module.exports = {
             return res.status(400).send(parsedIngredients.errors);
         }
 
-        // TODO get the current user id (may be from jwt or other way , from session is only temproray!)
-        const userId = req._passport.session.user;
+        const userId = getUserId(req.headers.authorization.split(" ")[1]);
+
         User
             .findOne(ObjectId(userId))
             .then(user => {
@@ -111,20 +112,30 @@ function validateRecipesData(recipe) {
     };
 }
 
-function parseIngredientsData(ingredient) {
+function parseIngredientsData(ingredients) {
     const errors = {}; 
     let validData = true;
+    let result;
 
-    const result = ingredient.split(/[\s,]+/);
-
-    if (result.length == 0) {
+    if (!ingredients) {
         validData = false;
-        errors.emptyIngredientsCollection = constants.EMPTY_INGREDIENTS_COLLECTION;
-    }
+        errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
+    } else {
+        result = ingredients.split(/[\s,]+/);
 
+        if (result.length == 0) {
+            validData = false;
+            errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
+        }
+    }
+    
     return {
         parsedData: result,
         validData,
         errors
     };
+}
+
+function getUserId(token) {
+    return jwt.verify(token, constants.PRIVATE_KEY).sub;
 }

@@ -23,7 +23,7 @@ module.exports = {
         };
     },
     VerifyBearerToken: (req, res, next) => {
-        const token = req.headers.authorization.substring(7, req.headers.authorization.length);
+        const token = req.headers.authorization.split(" ")[1];
         jwt.verify(token, constants.PRIVATE_KEY);
 
         next();
