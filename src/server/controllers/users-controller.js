@@ -64,8 +64,8 @@ module.exports = {
                         return res.status(500).send({error: err.message});
                     }
 
-                    const expirationOneHour = Math.floor(Date.now() / 1000) + (60 * 60);
-                    
+                    const expirationOneHour = getUTCDateOneHourExpirationTime();
+
                     // generate token
                     const jwtBearerToken = jwt.sign({}, constants.PRIVATE_KEY, {
                         algorithm: 'HS256',
@@ -156,4 +156,12 @@ function validateUserRegisterData(user) {
         success: validData,
         errors
     };
+}
+
+function getUTCDateOneHourExpirationTime() {  
+    // const expirationOneHourInMls = new Date(new Date().getTime() + 2 * 60000).getTime();
+    const date = new Date();
+    date.setUTCMinutes(date.getUTCMinutes() + 60);
+
+    return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 }

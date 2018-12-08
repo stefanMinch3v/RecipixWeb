@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     }
 
     check(): boolean {
-        const expirationTime = new Date(this.authService.getExpirationTime());
+        const expirationTime = new Date(parseInt(this.authService.getExpirationTime()));
         if (this.authService.isUserAuthenticated() && expirationTime > new Date) {
             return true;
         }
