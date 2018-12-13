@@ -81,8 +81,6 @@
               "client/styles.css"
             ],
             "scripts": [
-              "node_modules/particles/particles.js",
-              "client/app.js"
             ],
             "assets": [
               "client/favicon.ico",
