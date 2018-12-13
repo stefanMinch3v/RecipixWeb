@@ -28,7 +28,10 @@
               "node_modules/ngx-toastr/toastr.css",
 			  "node_modules/font-awesome/css/font-awesome.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/particles/particles.js",
+              "client/app.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -77,7 +80,10 @@
             "styles": [
               "client/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/particles/particles.js",
+              "client/app.js"
+            ],
             "assets": [
               "client/favicon.ico",
               "client/assets"

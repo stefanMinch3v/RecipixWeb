@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+#particles-js canvas{
+z-index: -1;
+position:absolute;
+top:0;
+background:url("https://wallpapercave.com/wp/wp1955174.jpg");
+background-size: cover;
+background-position-y: bottom;
+}
+#particles-js canvas:before{
+    content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom right, #002f4b, #dc4225);
+}
+#content-wrap{
+margin:auto;
+background-color:white;
+padding:0 8px;
+border-radius: 8px;
+border-bottom: 4px solid black;
+
+}
+nav.menu{
+    margin: 0 -10px;
+}
