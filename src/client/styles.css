@@ -27,3 +27,6 @@ border-bottom: 4px solid black;
 nav.menu{
     margin: 0 -10px;
 }
+nav ol{
+    padding-inline-start: 0px;
+}
