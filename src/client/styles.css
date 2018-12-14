@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+#particles-js {
+    min-height:100vh;
+}
 #particles-js canvas {
     z-index: -1;
     position:absolute;
@@ -6,6 +9,8 @@
     background-image: url("./assets/background-img.jpg");
     background-size: cover;
     background-position-y: bottom;
+    pointer-events: all;
+    cursor: pointer;
 }
 
 #particles-js canvas:before {
@@ -32,4 +37,12 @@ nav.menu {
 
 nav ol {
     padding-inline-start: 0px;
+}
+body{
+    position:relative;
+    pointer-events: none;
+
+}
+app-root{
+    pointer-events: all;
 }
