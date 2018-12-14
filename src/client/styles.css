@@ -41,6 +41,7 @@ nav ol {
 body{
     position:relative;
     pointer-events: none;
+    line-height: 2;
 
 }
 app-root{
