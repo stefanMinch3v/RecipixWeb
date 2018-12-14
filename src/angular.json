@@ -29,8 +29,8 @@
 			  "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
-              "node_modules/particles/particles.js",
-              "client/app.js"
+              "node_modules/particles.js/particles.js",
+              "client/assets/particlesApp.js"
             ]
           },
           "configurations": {
