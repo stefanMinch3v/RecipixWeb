@@ -24,7 +24,6 @@
 npm-debug.log
 testem.log
 /typings
-package-lock.json
 
 # e2e
 /e2e/*.js
@@ -122,3 +121,4 @@ typings/
 
 sensitiveData.json
 launch.json
+package-lock.json
