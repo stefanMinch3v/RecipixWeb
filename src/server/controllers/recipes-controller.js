@@ -69,12 +69,14 @@ module.exports = {
 
         Recipe
             .findOne(ObjectId(id))
+            .populate('user')
+            .populate('comment')
             .then(recipe => {
                 if (!recipe) {
                     return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
                 }
 
-                return res.status(200).send({ recipe });
+                return res.status(200).send(recipe);
             })
             .catch(err => res.status(400).send({ error: err.message }));
     },

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { RecipeAllViewModel } from '../../models/recipes/recipe-all.view.model';
+import { RecipeDetailsViewModel } from '../../models/recipes/recipe-details.view.model';
 
 @Injectable({
     providedIn: 'root'
@@ -30,8 +31,9 @@ export class RecipesService {
         return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
     }
 
-    getById() {
-        // TODO
+    getById(id: string): Observable<RecipeDetailsViewModel> {
+        const url = environment.localhost.url + `/recipes/details/${id}`;
+        return this.http.get<RecipeDetailsViewModel>(url);
     }
 
     edit() {

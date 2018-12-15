@@ -1,3 +1,55 @@
-<p>
-  recipe-details works!
-</p>
+<div *ngIf="recipe$ | async as recipe">
+  <div class="col-xs-12">
+    <ul>
+      <li><a routerLink="/recipes/edit/{{recipe._id}}">Edit</a></li>
+      <li><a (click)="deleteRecipe()">Delete</a></li>
+    </ul>
+  </div>
+  <div class="col-xs-12">
+    <img
+      src="{{recipe.imageUrl}}"
+      alt="{{recipe.title}}"
+      class="img img-fluid">
+  </div>
+
+  <div class="col-xs-12">
+    <h1>{{recipe.title}}</h1>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Description: </span>{{recipe.description}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Ingredients: </span>{{recipe.ingredients}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Category: </span>{{recipe.category}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Cooking time: </span>{{recipe.cookingTime}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Servings: </span>{{recipe.servings}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Raitings: TODO</span>{{recipe.raitings}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Author: </span>{{recipe.user.username}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Comments: TODO </span>{{recipe.comments}}</p>
+  </div>
+
+  <div class="col-xs-12">
+    <p><span class="description">Added on: </span>{{recipe.dateOfAdded | date: 'dd-MM-yyyy H:mm'}}</p>
+  </div>
+
+</div>
