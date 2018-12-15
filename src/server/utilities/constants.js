@@ -13,6 +13,7 @@ module.exports = {
     INVALID_RECIPE_COOKINGTIME: 'Cooking time must be at least 1 minute',
     INVALID_RECIPE_SERVINGS: 'Servings must be at least for 1 person',
     INVALID_TOKEN: 'Invalid token',
+    EMPTY_RECIPES: 'There aren`t any recipes',
     EMPTY_INGREDIENTS_COLLECTION: 'Ingredients cannot be empty',
     DUPLICATE_USERNAME_OR_EMAIL: 'Username or email already exist in the database.',
     DUPLICATE_KEY_DB: 'duplicate key',

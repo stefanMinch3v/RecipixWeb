@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { RecipesRoutingModule } from './recipes-routing.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { RecipesService } from '../../core/services/recipes/recipes.service';
 
@@ -12,7 +13,8 @@ import { recipeComponents } from '.';
   imports: [
     CommonModule,
     FormsModule,
-    RecipesRoutingModule
+    RecipesRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [...recipeComponents],
   providers: [RecipesService]

@@ -25,7 +25,7 @@ module.exports = {
             .findOne(ObjectId(userId))
             .then(user => {
                 if (!user) {
-                    return res.status(400).send({error: constants.INVALID_USER_DATA});
+                    return res.status(400).send({ error: constants.INVALID_USER_DATA });
                 }
 
                 const userId = user._id;
@@ -47,15 +47,15 @@ module.exports = {
                             parsedIngredients.parsedData.forEach(element => {
                                 if (!collectionNames.includes(element)) {
                                     Ingredient.create({ name: element })
-                                        .catch(err => res.status(400).send({error: err.message}));
+                                        .catch(err => res.status(400).send({ error: err.message }));
                                 }
                             });
-                        }).catch(err => res.status(400).send({error: err.message}));
-                }).catch(err => res.status(400).send({error: err.message}));
+                        }).catch(err => res.status(400).send({ error: err.message }));
+                }).catch(err => res.status(400).send({ error: err.message }));
 
                 return res.status(201).end();
             }).catch(err => {
-                return res.status(400).send({error: err.message});
+                return res.status(400).send({ error: err.message });
             });
     },
     editGet: (req, res) => {
@@ -68,8 +68,35 @@ module.exports = {
         // TODO
     },
     all: (req, res) => {
-        // TODO
+        // const search = req.query.search; TODO later
+        const page = parseInt(req.query.page) || 1;
+
+        const pageSize = 6;
+        //let startIndex = (page - 1) * pageSize;
+        //let endIndex = startIndex + pageSize;
+
+        Recipe
+            .find()
+            .sort('dateOfAdded')
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .then(recipes => {
+                if (!recipes) {
+                    return res.status(400).send({ error: constants.EMPTY_RECIPES });    
+                }
+
+                return res.status(200).send(recipes);
+            })
+            .catch(err => res.status(400).send({ error: err.message }));
     },
+    totalNumber: (req, res) => {
+        Recipe
+            .estimatedDocumentCount()
+            .then(allRecipes => {
+                return res.status(200).send(String(allRecipes));
+            })
+            .catch(err => res.status(400).send({ error: err.message }));
+    }
 };
 
 function validateRecipesData(recipe) { 

@@ -1,0 +1,16 @@
+.image-container {
+    margin: 5px;
+}
+
+a {
+    cursor: pointer;
+}
+
+img {
+    max-height: 150px;
+}
+
+.description {
+    font-weight: bold;
+    font-size: 1.2em;
+}

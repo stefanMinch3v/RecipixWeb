@@ -31,6 +31,7 @@
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "8.3.0",
     "mongoose": "5.2.7",
+    "ngx-pagination": "3.2.1",
     "ngx-toastr": "9.1.1",
     "particles.js": "^2.0.0",
     "passport": "0.4.0",
