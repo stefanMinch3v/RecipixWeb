@@ -65,7 +65,18 @@ module.exports = {
         // TODO
     },
     details: (req, res) => {
-        // TODO
+        const id = req.params.id || -1;
+
+        Recipe
+            .findOne(ObjectId(id))
+            .then(recipe => {
+                if (!recipe) {
+                    return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
+                }
+
+                return res.status(200).send({ recipe });
+            })
+            .catch(err => res.status(400).send({ error: err.message }));
     },
     all: (req, res) => {
         // const search = req.query.search; TODO later
