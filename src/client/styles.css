@@ -4,7 +4,7 @@
 }
 #particles-js canvas {
     z-index: -1;
-    position:absolute;
+    position:fixed;
     top:0;
     background-image: url("./assets/background-img.jpg");
     background-size: cover;
