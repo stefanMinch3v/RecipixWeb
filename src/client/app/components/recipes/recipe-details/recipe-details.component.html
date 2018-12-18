@@ -46,7 +46,10 @@
 
     <div *ngIf="isUserAuth()">
       <div *ngIf="recipe.currentUserRating === 0; else alreadyVoted">
-        <app-recipe-rating [rating]='recipe.rating' (ratingClick)='ratingComponentClick($event)'></app-recipe-rating>
+        <div>
+          <p class="description">Give a rate for this recipe: </p>
+          <app-recipe-rating [rating]='recipe.rating' (ratingClick)='ratingComponentClick($event)'></app-recipe-rating>
+        </div>
         <p *ngIf='clickedStars'>The recipe has been given {{clickedStars}} stars</p>
       </div>
       <ng-template #alreadyVoted>
