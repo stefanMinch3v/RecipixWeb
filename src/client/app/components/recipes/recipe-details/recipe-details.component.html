@@ -37,7 +37,23 @@
   </div>
 
   <div class="col-xs-12">
-    <p><span class="description">Raitings: TODO</span>{{recipe.raitings}}</p>
+    <p><span class="description">Average ratings: </span>{{(recipe.ratings / 2 / 10).toFixed(1)}}</p>
+    <p><span class="description">People rated: </span>{{recipe.peopleRated}}</p>
+    <div class="star-ratings-css">
+      <div class="star-ratings-css-top" [ngStyle]="{ 'width': recipe.ratings + '%' }"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    </div>
+
+    <div *ngIf="isUserAuth()">
+      <div *ngIf="recipe.currentUserRating === 0; else alreadyVoted">
+        <app-recipe-rating [rating]='recipe.rating' (ratingClick)='ratingComponentClick($event)'></app-recipe-rating>
+        <p *ngIf='clickedStars'>The recipe has been given {{clickedStars}} stars</p>
+      </div>
+      <ng-template #alreadyVoted>
+        <p>You have already voted with {{recipe.currentUserRating}} stars!</p>
+      </ng-template>
+    </div>
+    <a routerLink="/account/login" *ngIf="!isUserAuth()">Login in order to rate this recipe!</a>
   </div>
 
   <div class="col-xs-12">

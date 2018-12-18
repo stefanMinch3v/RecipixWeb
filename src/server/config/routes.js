@@ -13,6 +13,7 @@ module.exports = (app) => {
     app.post('/api/recipes/edit', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.editPost);
     app.get('/api/recipes/all', controllers.recipes.all);
     app.get('/api/recipes/details/:id', controllers.recipes.details);
+    app.post('/api/recipes/details/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.addRating);
     app.get('/api/recipes/total-number', controllers.recipes.totalNumber);
 
     // ingredients api primary for search

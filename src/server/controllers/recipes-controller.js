@@ -1,6 +1,7 @@
 const Recipe = require('mongoose').model('Recipe');
 const User = require('mongoose').model('User');
 const Ingredient = require('mongoose').model('Ingredient');
+const Rating = require('mongoose').model('Rating');
 const ObjectId = require('mongoose').Types.ObjectId;
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
@@ -64,21 +65,52 @@ module.exports = {
     editPost: (req, res) => {
         // TODO
     },
-    details: (req, res) => {
+    details: async (req, res) => {
         const id = req.params.id || -1;
+        let userId;
 
-        Recipe
-            .findOne(ObjectId(id))
-            .populate('user')
-            .populate('comment')
-            .then(recipe => {
-                if (!recipe) {
-                    return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
-                }
+        try {
+            userId = getUserId(req.headers.authorization.split(" ")[1]);            
+        } catch (error) {
+            userId = -1;
+        } finally {
+            userId = ObjectId(userId);
+        }
 
-                return res.status(200).send(recipe);
-            })
-            .catch(err => res.status(400).send({ error: err.message }));
+        try {
+            let recipe = await Recipe
+                .findOne(ObjectId(id))
+                .populate('user')
+                .populate('comment');
+            if (!recipe) {
+                return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
+            }
+
+            const ratingWithAlreadyVotedUser = await Rating.find({ userId: userId, recipeId: id });
+            let currentUserRating = 0;
+
+            if (ratingWithAlreadyVotedUser.length > 0) {
+                currentUserRating = ratingWithAlreadyVotedUser.map(r => r.rating)[0];
+            }
+
+            let rating = await Rating.find({ recipeId: id });
+            rating = rating.map(r => r.rating);
+            const peopleRated = rating.length;
+
+            let sum = ((rating.reduce((a, b) => a + b, 0) / peopleRated) * 10) * 2;
+            if (!sum || Number.isNaN(sum)) {
+                sum = 0;
+            }
+
+            recipe = recipe.toObject();
+            recipe.ratings = sum;
+            recipe.currentUserRating = currentUserRating;
+            recipe.peopleRated = peopleRated;
+
+            return res.status(200).send(recipe);
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     },
     all: (req, res) => {
         // const search = req.query.search; TODO later
@@ -109,6 +141,37 @@ module.exports = {
                 return res.status(200).send(String(allRecipes));
             })
             .catch(err => res.status(400).send({ error: err.message }));
+    },
+    addRating: async (req, res) => {
+        const recipeId = ObjectId(req.params.id || -1);
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
+        const votedStars = req.body.stars;
+
+        if (votedStars < 1 || votedStars > 5) {
+            return res.status(400).send({ error: constants.INVALID_RATING });
+        }
+
+        try {
+            const recipe = await Recipe.findOne(recipeId);
+            if (!recipe) {
+                return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });    
+            }
+            
+            const rating = await Rating.findOne({ recipeId: recipeId, userId: userId });
+            if (rating) {
+                return res.status(409).send({ error: constants.ALREADY_VOTED_RECIPE });
+            }
+
+            await Rating.create({
+                recipeId: recipeId,
+                userId: userId,
+                rating: votedStars
+            });
+
+            return res.status(200).end();
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     }
 };
 

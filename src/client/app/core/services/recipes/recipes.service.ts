@@ -43,4 +43,9 @@ export class RecipesService {
     delete(id: string) {
         // TODO
     }
+    
+    addRating(stars: number, recipeId: string) {
+        const url = environment.localhost.url + `/recipes/details/${recipeId}`;
+        return this.http.post(url, { stars });
+    }
 }

@@ -8,9 +8,11 @@ export class RecipeDetailsViewModel{
         public cookingTime?: number,
         public description?: string,
         public dateOfAdded?: Date,
-        public raitings?: number,
+        public ratings?: number,
         public servings?: number,
         public comments?: Array<string>,
-        public user?: string
+        public user?: string,
+        public currentUserRating?: number,
+        public peopleRated?: number
     ) { }
 }

@@ -5,7 +5,6 @@ export class RecipeAllViewModel {
         public ingredients?: string,
         public imageUrl?: string,
         public category?: string,
-        public ratings?: number,
         public cookingTime?: number
     ) { }
 }

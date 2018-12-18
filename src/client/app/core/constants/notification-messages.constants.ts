@@ -6,7 +6,8 @@ const notificationMessages = {
     successRegistration: "Successfully registered.",
     successLogin: "Successfully logged in.",
     successLogout: "Successfully logged out.",
-    successCreatedRecipe: "The recipe was successfully added."
+    successCreatedRecipe: "The recipe was successfully added.",
+    successRating: "Successfully voted."
 };
 
 export { notificationMessages };
