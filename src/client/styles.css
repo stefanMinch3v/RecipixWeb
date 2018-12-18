@@ -29,10 +29,10 @@
     padding:0 8px;
     border-radius: 8px;
     border-bottom: 4px solid black;
+    padding-top:180px;
 }
 
 nav.menu {
-    margin: 0 -10px;
 }
 
 nav ol {
@@ -42,8 +42,17 @@ body{
     position:relative;
     pointer-events: none;
     line-height: 2;
+    overflow-y:scroll;
 
 }
 app-root{
     pointer-events: all;
+}
+
+app-header{
+    position: absolute;
+    width: 100%;
+    margin-top: -180px;
+    z-index: 2;
+    left:0;
 }
