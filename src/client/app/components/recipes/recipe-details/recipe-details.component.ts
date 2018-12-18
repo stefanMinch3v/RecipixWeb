@@ -5,7 +5,6 @@ import { RecipesService } from '../../../core/services/recipes/recipes.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 
-import { Observable } from 'rxjs';
 import { RecipeDetailsViewModel } from '../../../core/models/recipes/recipe-details.view.model';
 import { notificationMessages } from '../../../core/constants/notification-messages.constants';
 
@@ -15,7 +14,7 @@ import { notificationMessages } from '../../../core/constants/notification-messa
   styleUrls: ['./recipe-details.component.css']
 })
 export class RecipeDetailsComponent implements OnInit {
-  recipe$: Observable<RecipeDetailsViewModel>;
+  recipe: RecipeDetailsViewModel;
   recipeId: string;
   clickedStars: number;
 
@@ -31,7 +30,8 @@ export class RecipeDetailsComponent implements OnInit {
 
   getRecipe() {
     this.recipeId = this.route.snapshot.params.id;
-    this.recipe$ = this.recipesService.getById(this.recipeId);
+    this.recipesService.getById(this.recipeId)
+      .subscribe(recipeData => this.recipe = recipeData);
   }
 
   deleteRecipe() {
@@ -43,6 +43,7 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipesService.addRating(this.clickedStars, this.recipeId)
       .subscribe(() => {
         this.notificationService.infoMessage(notificationMessages.successRating);
+        this.getRecipe();
       });
   }
 

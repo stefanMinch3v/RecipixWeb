@@ -1,4 +1,4 @@
-<div *ngIf="recipe$ | async as recipe">
+<div *ngIf="recipe">
   <div class="col-xs-12">
     <ul>
       <li><a routerLink="/recipes/edit/{{recipe._id}}">Edit</a></li>
@@ -13,7 +13,7 @@
   </div>
 
   <div class="col-xs-12">
-    <h1>{{recipe.title}}</h1>
+    <h1>{{recipe.title}}%</h1>
   </div>
 
   <div class="col-xs-12">
@@ -50,7 +50,7 @@
         <p *ngIf='clickedStars'>The recipe has been given {{clickedStars}} stars</p>
       </div>
       <ng-template #alreadyVoted>
-        <p>You have already voted with {{recipe.currentUserRating}} stars!</p>
+        <p>You have voted with {{recipe.currentUserRating}} stars!</p>
       </ng-template>
     </div>
     <a routerLink="/account/login" *ngIf="!isUserAuth()">Login in order to rate this recipe!</a>
