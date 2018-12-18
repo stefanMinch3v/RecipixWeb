@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { NotificationService } from '../notification.service';
-  
+import { notificationMessages } from '../../constants/notification-messages.constants';
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(private notificationService: NotificationService) { }
@@ -15,8 +16,9 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                 if (error.statusText == "Unknown Error") {
                     errorMsg += "Server is down!"
-                }
-                else {
+                } else if(String(Object.values(error.error)).includes(notificationMessages.dublicateTitleForRecipes)) {
+                    errorMsg += "There is already recipe with this title!"
+                } else {
                     for (let [key, value] of Object.entries(error.error)) {
                         errorMsg += value;
                     }

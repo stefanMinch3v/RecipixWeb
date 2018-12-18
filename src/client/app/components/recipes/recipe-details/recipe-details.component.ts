@@ -32,7 +32,6 @@ export class RecipeDetailsComponent implements OnInit {
   getRecipe() {
     this.recipeId = this.route.snapshot.params.id;
     this.recipe$ = this.recipesService.getById(this.recipeId);
-    this.recipe$.subscribe(data => console.log(data))
   }
 
   deleteRecipe() {

@@ -7,7 +7,8 @@ const notificationMessages = {
     successLogin: "Successfully logged in.",
     successLogout: "Successfully logged out.",
     successCreatedRecipe: "The recipe was successfully added.",
-    successRating: "Successfully voted."
+    successRating: "Successfully voted.",
+    dublicateTitleForRecipes: "E11000 duplicate key error"
 };
 
 export { notificationMessages };

@@ -7,7 +7,7 @@ const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
-    create: (req, res) => {
+    create: async (req, res) => {
         let reqRecipe = req.body;
         
         const recipeValidationInfo = validateRecipesData(reqRecipe);
@@ -20,44 +20,35 @@ module.exports = {
             return res.status(400).send(parsedIngredients.errors);
         }
 
-        const userId = getUserId(req.headers.authorization.split(" ")[1]);
+        try {
+            const userId = getUserId(req.headers.authorization.split(" ")[1]);
 
-        User
-            .findOne(ObjectId(userId))
-            .then(user => {
-                if (!user) {
-                    return res.status(400).send({ error: constants.INVALID_USER_DATA });
-                }
+            const user = await User.findOne(ObjectId(userId));
+            if (!user) {
+                return res.status(400).send({ error: constants.INVALID_USER_DATA });
+            }
 
-                const userId = user._id;
-                
-                Recipe.create({
-                    title: reqRecipe.title,
-                    ingredients: parsedIngredients.parsedData,
-                    description: reqRecipe.description,
-                    imageUrl: reqRecipe.imageUrl,
-                    category: reqRecipe.category,
-                    cookingTime: reqRecipe.cookingTime,
-                    servings: reqRecipe.servings,
-                    user: userId
-                }).then(() => {
-                    Ingredient.find()
-                        .then(ingredients => {
-                            let collectionNames = ingredients.map(el => el.name);
-
-                            parsedIngredients.parsedData.forEach(element => {
-                                if (!collectionNames.includes(element)) {
-                                    Ingredient.create({ name: element })
-                                        .catch(err => res.status(400).send({ error: err.message }));
-                                }
-                            });
-                        }).catch(err => res.status(400).send({ error: err.message }));
-                }).catch(err => res.status(400).send({ error: err.message }));
-
-                return res.status(201).end();
-            }).catch(err => {
-                return res.status(400).send({ error: err.message });
+            await Recipe.create({
+                title: reqRecipe.title,
+                ingredients: parsedIngredients.parsedData,
+                description: reqRecipe.description,
+                imageUrl: reqRecipe.imageUrl,
+                category: reqRecipe.category,
+                cookingTime: reqRecipe.cookingTime,
+                servings: reqRecipe.servings,
+                user: userId
             });
+
+            let ingredients = await Ingredient.find();
+            let collectionNames = ingredients.map(el => el.name);
+            parsedIngredients.parsedData.forEach(async element => {
+                if (!collectionNames.includes(element)) {
+                    await Ingredient.create({ name: element });
+                }
+            });
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     },
     editGet: (req, res) => {
         // TODO
@@ -112,35 +103,36 @@ module.exports = {
             return res.status(400).send({ error: err.message });
         }
     },
-    all: (req, res) => {
+    all: async (req, res) => {
         // const search = req.query.search; TODO later
         const page = parseInt(req.query.page) || 1;
 
         const pageSize = 6;
         //let startIndex = (page - 1) * pageSize;
         //let endIndex = startIndex + pageSize;
+        try {
+            const recipes = await Recipe
+                .find()
+                .sort('dateOfAdded')
+                .skip((page - 1) * pageSize)
+                .limit(pageSize);
 
-        Recipe
-            .find()
-            .sort('dateOfAdded')
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .then(recipes => {
-                if (!recipes) {
-                    return res.status(400).send({ error: constants.EMPTY_RECIPES });    
-                }
+            if (!recipes) {
+                return res.status(400).send({ error: constants.EMPTY_RECIPES });    
+            }
 
-                return res.status(200).send(recipes);
-            })
-            .catch(err => res.status(400).send({ error: err.message }));
+            return res.status(200).send(recipes);
+        } catch (err) {
+            res.status(400).send({ error: err.message });
+        }
     },
-    totalNumber: (req, res) => {
-        Recipe
-            .estimatedDocumentCount()
-            .then(allRecipes => {
-                return res.status(200).send(String(allRecipes));
-            })
-            .catch(err => res.status(400).send({ error: err.message }));
+    totalNumber: async (req, res) => {
+        try {
+            const allRecipes = await Recipe.estimatedDocumentCount();
+            return res.status(200).send(String(allRecipes));
+        } catch (err) {
+            res.status(400).send({ error: err.message });
+        }
     },
     addRating: async (req, res) => {
         const recipeId = ObjectId(req.params.id || -1);
