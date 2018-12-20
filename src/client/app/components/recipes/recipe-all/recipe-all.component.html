@@ -1,4 +1,7 @@
 <div class="row">
+  <div class="col-md-10 center-spinner" *ngIf="!recipes$">
+    <i class="fa fa-refresh fa-spin my-spinner"></i>
+  </div>
   <div *ngFor="let recipe of recipes$ | async | paginate: {
       itemsPerPage: pageSize,
       currentPage: currentPage,

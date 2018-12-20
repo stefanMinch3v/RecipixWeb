@@ -14,6 +14,7 @@ module.exports = {
     INVALID_RECIPE_SERVINGS: 'Servings must be at least for 1 person',
     INVALID_TOKEN: 'Invalid token',
     INVALID_RATING: 'Invalid rating, must be between 1 and 5',
+    INVALID_COMMENT: 'Invalid comment, must be at least 3 symbols long',
     NOT_FOUND_RECIPE: 'No such recipe found.',
     ALREADY_VOTED_RECIPE: 'You have already voted for this recipe',
     EMPTY_RECIPES: 'There aren`t any recipes',

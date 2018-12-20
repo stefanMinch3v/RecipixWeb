@@ -2,6 +2,7 @@ const Recipe = require('mongoose').model('Recipe');
 const User = require('mongoose').model('User');
 const Ingredient = require('mongoose').model('Ingredient');
 const Rating = require('mongoose').model('Rating');
+const Comment = require('mongoose').model('Comment');
 const ObjectId = require('mongoose').Types.ObjectId;
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
@@ -71,8 +72,8 @@ module.exports = {
         try {
             let recipe = await Recipe
                 .findOne(ObjectId(id))
-                .populate('user')
-                .populate('comment');
+                .populate('user', 'username')
+                .populate({ path: 'comments', populate: { path: 'user', select: 'username' }});
             if (!recipe) {
                 return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
             }
@@ -159,6 +160,34 @@ module.exports = {
                 userId: userId,
                 rating: votedStars
             });
+
+            return res.status(200).end();
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
+    },
+    addComment: async (req, res) => {
+        const recipeId = ObjectId(req.params.id || -1);
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
+        const userContent = req.body.content;
+
+        if (!userContent || userContent.length < 3) {
+            return res.status(400).send({ error: constants.INVALID_COMMENT }); 
+        }
+
+        try {
+            let recipe = await Recipe.findOne(recipeId);
+            if (!recipe) {
+                return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });    
+            }
+
+            const comment = await Comment.create({
+                user: userId,
+                content: userContent
+            });
+
+            recipe.comments.push(comment._id);
+            await recipe.save();
 
             return res.status(200).end();
         } catch (err) {

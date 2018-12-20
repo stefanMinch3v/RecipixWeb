@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 
 import { RecipeAllViewModel } from '../../models/recipes/recipe-all.view.model';
 import { RecipeDetailsViewModel } from '../../models/recipes/recipe-details.view.model';
+import { RecipeCommentModel } from '../../models/recipes/recipe-comment.input.model';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,12 @@ export class RecipesService {
     }
     
     addRating(stars: number, recipeId: string) {
-        const url = environment.localhost.url + `/recipes/details/${recipeId}`;
+        const url = environment.localhost.url + `/recipes/add-rating/${recipeId}`;
         return this.http.post(url, { stars });
+    }
+
+    addComment(recipeId: string, recipeModel: RecipeCommentModel) {
+        const url = environment.localhost.url + `/recipes/add-comment/${recipeId}`;
+        return this.http.post(url, recipeModel);
     }
 }

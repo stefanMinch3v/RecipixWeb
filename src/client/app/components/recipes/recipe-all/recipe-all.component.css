@@ -14,3 +14,12 @@ img {
     font-weight: bold;
     font-size: 1.2em;
 }
+
+.center-spinner {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.my-spinner {
+    font-size: 80px;
+}

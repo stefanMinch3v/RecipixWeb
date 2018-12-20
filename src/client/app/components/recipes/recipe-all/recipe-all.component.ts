@@ -17,7 +17,8 @@ export class RecipeAllComponent implements OnInit {
   constructor(private recipesService: RecipesService) { }
 
   ngOnInit() {
-    this.recipes$ = this.recipesService.getAll(this.currentPage);
+    setTimeout(() => this.recipes$ = this.recipesService.getAll(this.currentPage), 1000);
+    
     this.recipesService.countTotal()
       .subscribe(countAll => this.totalRecipes = countAll);
   }

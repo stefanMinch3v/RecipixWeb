@@ -1,3 +1,6 @@
+<div class="col-md-10 center-spinner" *ngIf="!recipe">
+  <i class="fa fa-refresh fa-spin my-spinner"></i>
+</div>
 <div *ngIf="recipe">
   <div class="col-xs-12">
     <ul>
@@ -64,11 +67,54 @@
   </div>
 
   <div class="col-xs-12">
-    <p><span class="description">Comments: TODO </span>{{recipe.comments}}</p>
-  </div>
-
-  <div class="col-xs-12">
     <p><span class="description">Added on: </span>{{recipe.dateOfAdded | date: 'dd-MM-yyyy H:mm'}}</p>
   </div>
 
+  <button class="btn btn-success" (click)="showComments()">{{seeComments ? "Hide" : "Show"}} comments</button>
+  <div class="col-md-10" *ngIf="showSpinner && seeComments === false">
+    <i class="fa fa-refresh fa-spin my-spinner-comments"></i>
+  </div>
+  <div class="col-xs-12" *ngIf="seeComments && recipe.comments.length > 0">
+    <p><span class="description">Comments: </span></p>
+    <ul>
+      <li *ngFor="let comment of recipe.comments" class="col-md-8 comments">
+        <p><span class="description">User: </span>{{comment.user.username}}</p>
+        <p><span class="description">Comment: </span>{{comment.content}}</p>
+        <p><span class="description">Date of added: </span>{{comment.dateOfAdded | date: 'dd-MM-yyyy H:mm'}}</p>
+      </li>
+    </ul>
+  </div>
+  <div class="col-xs-12" *ngIf="seeComments && recipe.comments.length === 0">
+    <p class="description">No comments yet.</p>
+  </div>
+
+  <div class="col-xs-12" *ngIf="isUserAuth()">
+    <p><span class="description">Add comment: </span></p>
+    <div class="col-md-10">
+      <form #commentForm="ngForm" (submit)="addComment()" class="col-md-10">
+          <div class="form-group">
+              <label for="content">Content:</label>
+              <textarea class="form-control"
+                      type="text"
+                      minlength="3"
+                      id="content"
+                      name="content"
+                      #content="ngModel"
+                      [(ngModel)]="commentInputModel.content"
+                      rows="3"
+                      required>
+              </textarea>
+          </div>
+          <div class="alert text-danger" *ngIf="content.invalid && content.dirty">
+              Message must be at least 3 symbols long!
+          </div>
+      
+          <button type="submit" class="btn btn-default"
+                  [disabled]="commentForm.form.invalid">
+              Add
+          </button>
+      </form>
+    </div>
+  </div>
+  <p><a routerLink="/account/login" *ngIf="!isUserAuth()">Login in order to add comment!</a></p>
 </div>

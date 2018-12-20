@@ -6,6 +6,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 
 import { RecipeDetailsViewModel } from '../../../core/models/recipes/recipe-details.view.model';
+import { RecipeCommentModel } from '../../../core/models/recipes/recipe-comment.input.model';
 import { notificationMessages } from '../../../core/constants/notification-messages.constants';
 
 @Component({
@@ -15,8 +16,11 @@ import { notificationMessages } from '../../../core/constants/notification-messa
 })
 export class RecipeDetailsComponent implements OnInit {
   recipe: RecipeDetailsViewModel;
+  commentInputModel: RecipeCommentModel;
   recipeId: string;
   clickedStars: number;
+  seeComments: boolean = false;
+  showSpinner: boolean = false;
 
   constructor(
     private recipesService: RecipesService,
@@ -29,9 +33,11 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   getRecipe() {
+    this.commentInputModel = new RecipeCommentModel();
     this.recipeId = this.route.snapshot.params.id;
-    this.recipesService.getById(this.recipeId)
-      .subscribe(recipeData => this.recipe = recipeData);
+    setTimeout(() => 
+      this.recipesService.getById(this.recipeId)
+        .subscribe(recipeData => this.recipe = recipeData), 1000);
   }
 
   deleteRecipe() {
@@ -43,6 +49,23 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipesService.addRating(this.clickedStars, this.recipeId)
       .subscribe(() => {
         this.notificationService.infoMessage(notificationMessages.successRating);
+        this.getRecipe();
+      });
+  }
+
+  showComments() {
+    this.showSpinner = !this.showSpinner;
+    setTimeout(() => this.changeCommentsValue(), 600);
+  }
+
+  changeCommentsValue() {
+    this.seeComments = !this.seeComments;
+  }
+
+  addComment() {
+    this.recipesService.addComment(this.recipeId, this.commentInputModel)
+      .subscribe(() => {
+        this.notificationService.infoMessage(notificationMessages.successComment);
         this.getRecipe();
       });
   }
