@@ -7,7 +7,7 @@
             <a routerLink="/">About</a>
         </li>
         <li class="menu-item">
-            <a routerLink="/">Recipes</a>
+            <a class="non-link">Recipes</a>
             <ol class="sub-menu">
                 <li class="menu-item">
                     <a routerLink="/recipes/create">Submit new recipe</a>
@@ -38,7 +38,7 @@
             <a routerLink="/">Contact</a>
         </li>
         <li class="menu-item" *ngIf="!isUserAuth()">
-            <a routerLink="/">Account</a>
+            <a class="non-link">Account</a>
             <ol class="sub-menu">
                 <li class="menu-item">
                     <a routerLink="/account/login">Login</a>
