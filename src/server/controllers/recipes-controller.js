@@ -132,7 +132,7 @@ module.exports = {
         let userId;
 
         try {
-            userId = getUserId(req.headers.authorization.split(" ")[1]);            
+            userId = getUserId(req.headers.authorization.split(" ")[1]);     
         } catch (error) {
             userId = -1;
         } finally {
