@@ -47,15 +47,85 @@ module.exports = {
                     await Ingredient.create({ name: element });
                 }
             });
+
+            return res.status(201).end();
         } catch (err) {
             return res.status(400).send({ error: err.message });
         }
     },
-    editGet: (req, res) => {
-        // TODO
+    editGet: async (req, res) => {
+        const recipeId = req.params.id || -1;
+        let userId;
+
+        try {
+            userId = getUserId(req.headers.authorization.split(" ")[1]);            
+        } catch (error) {
+            userId = -1;
+        } finally {
+            userId = ObjectId(userId);
+        }
+
+        try {
+            const recipe = await Recipe
+                .findOne({ _id: ObjectId(recipeId), user: userId });
+            if (!recipe) {
+                return res.status(400).send({ error: constants.NOT_FOUND_RECIPE_AND_USER });
+            }
+
+            return res.status(200).send(recipe);
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     },
-    editPost: (req, res) => {
-        // TODO
+    editPost: async (req, res) => {
+        let reqRecipe = req.body;
+        let recipeId = req.body._id || -1;
+
+        const recipeValidationInfo = validateRecipesData(reqRecipe);
+        if (!recipeValidationInfo.success) {
+            return res.status(400).send(recipeValidationInfo.errors);
+        }
+
+        const parsedIngredients = parseIngredientsData(reqRecipe.ingredients);
+        if (!parsedIngredients.validData) {
+            return res.status(400).send(parsedIngredients.errors);
+        }
+
+        try {
+            const userId = getUserId(req.headers.authorization.split(" ")[1]);
+
+            const user = await User.findOne(ObjectId(userId));
+            if (!user) {
+                return res.status(400).send({ error: constants.INVALID_USER_DATA });
+            }
+
+            const queryFind = { _id: recipeId, user: userId };
+            let recipe = await Recipe.findById(queryFind);
+            if (!recipe) {
+                return res.status(400).send({ error: constants.NOT_FOUND_RECIPE });
+            }
+
+            recipe.title = reqRecipe.title;
+            recipe.ingredients = parsedIngredients.parsedData;
+            recipe.description = reqRecipe.description;
+            recipe.imageUrl = reqRecipe.imageUrl;
+            recipe.category = reqRecipe.category;
+            recipe.cookingTime = reqRecipe.cookingTime;
+            recipe.servings = reqRecipe.servings;
+            await recipe.save();
+
+            let ingredients = await Ingredient.find();
+            let collectionNames = ingredients.map(el => el.name);
+            parsedIngredients.parsedData.forEach(async element => {
+                if (!collectionNames.includes(element)) {
+                    await Ingredient.create({ name: element });
+                }
+            });
+
+            return res.status(200).end();
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     },
     details: async (req, res) => {
         const id = req.params.id || -1;
@@ -123,6 +193,43 @@ module.exports = {
             }
 
             return res.status(200).send(recipes);
+        } catch (err) {
+            res.status(400).send({ error: err.message });
+        }
+    },
+    remove: async (req, res) => {
+        const recipeId = ObjectId(req.params.id || -1);
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
+
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(400).send({ error: constants.INVALID_USER_DATA });
+            }
+
+            const queryFind = { _id: recipeId, user: userId };
+            let recipe = await Recipe.findById(queryFind);
+            if (!recipe) {
+                return res.status(404).send({ error: constants.NOT_FOUND_RECIPE });
+            }
+
+            const commentsIds = recipe.comments;
+            if (commentsIds.length > 0) {
+                commentsIds.forEach(async commentId => {
+                    await Comment.findByIdAndRemove({ _id: commentId });
+                });
+            }
+
+            const ratingsForRecipe = await Rating.find({ recipeId: recipeId });
+            if (ratingsForRecipe.length > 0) {
+                ratingsForRecipe.forEach(async rating => {
+                    await rating.remove();
+                });
+            }
+
+            await recipe.remove();
+
+            return res.status(200).end();
         } catch (err) {
             res.status(400).send({ error: err.message });
         }
@@ -241,17 +348,27 @@ function parseIngredientsData(ingredients) {
     let validData = true;
     let result;
 
-    if (!ingredients) {
-        validData = false;
-        errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
-    } else {
+    if (Array.isArray(ingredients)) {
         result = ingredients
-            .split(",")
             .map(el => el.trim());
 
         if (result.length == 0) {
             validData = false;
             errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
+        }
+    } else {
+        if (!ingredients) {
+            validData = false;
+            errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
+        } else {
+            result = ingredients
+                .split(",")
+                .map(el => el.trim());
+    
+            if (result.length == 0) {
+                validData = false;
+                errors.ingredients = constants.EMPTY_INGREDIENTS_COLLECTION;
+            }
         }
     }
     

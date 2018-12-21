@@ -37,12 +37,19 @@ export class RecipesService {
         return this.http.get<RecipeDetailsViewModel>(url);
     }
 
-    edit() {
-        // TODO
+    editGet(id: string): Observable<RecipeDetailsViewModel> {
+        const url = environment.localhost.url + `/recipes/edit/${id}`;
+        return this.http.get<RecipeDetailsViewModel>(url);
+    }
+
+    editPost(editModel: RecipeFormModel) {
+        const url = environment.localhost.url + '/recipes/edit';
+        return this.http.post(url, editModel);
     }
 
     delete(id: string) {
-        // TODO
+        const url = environment.localhost.url + `/recipes/delete/${id}`;
+        return this.http.delete(url);
     }
     
     addRating(stars: number, recipeId: string) {

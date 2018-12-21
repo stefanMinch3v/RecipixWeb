@@ -11,6 +11,7 @@ module.exports = (app) => {
     app.post('/api/recipes/create', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.create);
     app.get('/api/recipes/edit/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.editGet);
     app.post('/api/recipes/edit', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.editPost);
+    app.delete('/api/recipes/delete/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.remove);
     app.get('/api/recipes/all', controllers.recipes.all);
     app.get('/api/recipes/details/:id', controllers.recipes.details);
     app.post('/api/recipes/add-rating/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.addRating);

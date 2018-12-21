@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="recipe">
   <div class="col-xs-12">
-    <ul>
+    <ul *ngIf="recipe.user && recipe.user.username === getUsername()">
       <li><a routerLink="/recipes/edit/{{recipe._id}}">Edit</a></li>
       <li><a (click)="deleteRecipe()">Delete</a></li>
     </ul>

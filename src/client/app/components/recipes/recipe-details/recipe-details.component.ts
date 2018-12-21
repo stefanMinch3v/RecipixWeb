@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { RecipesService } from '../../../core/services/recipes/recipes.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -25,6 +25,7 @@ export class RecipeDetailsComponent implements OnInit {
   constructor(
     private recipesService: RecipesService,
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private notificationService: NotificationService) { }
 
@@ -41,7 +42,11 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   deleteRecipe() {
-    // TODO
+    this.recipesService.delete(this.recipeId)
+      .subscribe(() => {
+        this.notificationService.successMessage(notificationMessages.successDeletedRecipe);
+        this.router.navigate(['/recipes/all?page=1']);
+      });
   }
 
   ratingComponentClick(clickObj) {
@@ -72,5 +77,9 @@ export class RecipeDetailsComponent implements OnInit {
 
   isUserAuth(): boolean {
     return this.authService.isUserAuthenticated();
+  }
+
+  getUsername() {
+    return this.authService.getUser();
   }
 }
