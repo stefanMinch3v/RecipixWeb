@@ -9,7 +9,6 @@ import { AuthService } from '../../core/services/auth.service';
 
 import { AnonymousGuard } from '../../core/services/guards/anonymous.guard';
 import { accountComponents } from '.';
-import { ProfileComponent } from './profile/profile.component'
 
 @NgModule({
     imports: [CommonModule, AccountRoutingModule, FormsModule],
