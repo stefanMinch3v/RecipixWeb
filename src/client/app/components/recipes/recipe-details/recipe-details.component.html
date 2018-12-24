@@ -70,7 +70,7 @@
     <p><span class="description">Added on: </span>{{recipe.dateOfAdded | date: 'dd-MM-yyyy H:mm'}}</p>
   </div>
 
-  <button class="btn btn-success" (click)="showComments()">{{seeComments ? "Hide" : "Show"}} comments</button>
+  <button class="btn {{btnStyle}}" (click)="showComments()">{{seeComments ? "Hide" : "Show"}} comments</button>
   <div class="col-md-10" *ngIf="showSpinner && seeComments === false">
     <i class="fa fa-refresh fa-spin my-spinner-comments"></i>
   </div>

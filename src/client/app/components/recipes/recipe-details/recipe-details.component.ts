@@ -21,6 +21,7 @@ export class RecipeDetailsComponent implements OnInit {
   clickedStars: number;
   seeComments: boolean = false;
   showSpinner: boolean = false;
+  btnStyle: string;
 
   constructor(
     private recipesService: RecipesService,
@@ -31,6 +32,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getRecipe();
+    this.btnStyle = "btn-success";
   }
 
   getRecipe() {
@@ -65,6 +67,12 @@ export class RecipeDetailsComponent implements OnInit {
 
   changeCommentsValue() {
     this.seeComments = !this.seeComments;
+    if (this.seeComments) {
+      this.btnStyle = "btn-warning";
+    }
+    else {
+      this.btnStyle = "btn-success";
+    }
   }
 
   addComment() {
