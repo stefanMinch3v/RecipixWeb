@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountModule } from './components/account/account.module';
 import { RecipesModule } from './components/recipes/recipes.module';
 
+import { CookieComponent } from './components/shared/cookie/cookie.component';
+
 const routes: Routes = [
     {
         path: 'account',
@@ -12,6 +14,10 @@ const routes: Routes = [
     {
         path: 'recipes',
         loadChildren: () => RecipesModule
+    },
+    {
+        path: 'cookie-policy',
+        component: CookieComponent
     },
     {
         path: '**',

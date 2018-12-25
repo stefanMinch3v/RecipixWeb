@@ -4,6 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { CookieLawModule } from 'angular2-cookie-law';
+
 import { AppRoutesModule } from './app.routes.module';
 import { AccountModule } from './components/account/account.module';
 import { SharedModule } from './components/shared/shared.module';
@@ -30,7 +32,8 @@ import { environment } from 'client/environments/environment';
     ToastrModule.forRoot(environment.toastr),
     AccountModule,
     SharedModule,
-    RecipesModule
+    RecipesModule,
+    CookieLawModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
