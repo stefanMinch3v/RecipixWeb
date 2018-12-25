@@ -5,6 +5,8 @@ import { AccountModule } from './components/account/account.module';
 import { RecipesModule } from './components/recipes/recipes.module';
 
 import { CookieComponent } from './components/shared/cookie/cookie.component';
+import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
     {
@@ -20,8 +22,12 @@ const routes: Routes = [
         component: CookieComponent
     },
     {
+        path: 'about',
+        component: AboutComponent
+    },
+    {
         path: '**',
-        redirectTo: ''
+        component: HomeComponent
     }
 ];
 

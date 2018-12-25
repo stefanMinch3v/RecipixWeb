@@ -12,6 +12,8 @@ import { SharedModule } from './components/shared/shared.module';
 import { RecipesModule } from './components/recipes/recipes.module';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
 
 import { AuthGuard } from './core/services/guards/auth.guard';
 import { AdminGuard } from './core/services/guards/admin.guard';
@@ -22,7 +24,9 @@ import { environment } from 'client/environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

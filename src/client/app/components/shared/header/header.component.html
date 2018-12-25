@@ -4,38 +4,32 @@
             <a routerLink="/">Home</a>
         </li>
         <li class="menu-item">
-            <a routerLink="/">About</a>
+            <a routerLink="/about">About</a>
         </li>
         <li class="menu-item">
             <a class="non-link">Recipes</a>
             <ol class="sub-menu">
                 <li class="menu-item">
-                    <a routerLink="/recipes/create">Submit new recipe</a>
+                    <a routerLink="/recipes/create">Submit new</a>
                 </li>
                 <li class="menu-item">
-                    <a routerLink="/recipes/all">View all</a>
-                </li>
-                <li class="menu-item">
-                    <a routerLink="/">Vegetarians</a>
+                    <a routerLink="/recipes/all">All</a>
                 </li>
             </ol>
         </li>
         <li class="menu-item">
-            <a routerLink="/">Season recipes</a>
+            <a routerLink="/">Categories</a>
             <ol class="sub-menu">
                 <li class="menu-item">
-                    <a routerLink="/">Summer</a>
+                    <a routerLink="/">Vegetarian</a>
                 </li>
                 <li class="menu-item">
-                    <a routerLink="/">Fall</a>
+                    <a routerLink="/">Meat</a>
                 </li>
                 <li class="menu-item">
-                    <a routerLink="/">Winter BBQs</a>
+                    <a routerLink="/">Fruit and vegetables</a>
                 </li>
             </ol>
-        </li>
-        <li class="menu-item">
-            <a routerLink="/">Contact</a>
         </li>
         <li class="menu-item" *ngIf="!isUserAuth()">
             <a class="non-link">Account</a>
