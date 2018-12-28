@@ -31,6 +31,7 @@
     "express-session": "1.15.6",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "8.3.0",
+    "mongo-sanitize": "^1.0.1",
     "mongoose": "5.2.7",
     "ng-pagination": "^1.0.1",
     "ngx-pagination": "^3.2.1",

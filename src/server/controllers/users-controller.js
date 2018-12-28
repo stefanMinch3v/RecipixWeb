@@ -2,6 +2,7 @@ const encryption = require('../utilities/encryption');
 const User = require('mongoose').model('User');
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
+const sanitize = require('mongo-sanitize');
 
 // Jwt from - https://blog.angular-university.io/angular-jwt-authentication/
 
@@ -49,13 +50,13 @@ module.exports = {
         }
 
         User
-            .findOne({ username: reqUser.username })
+            .findOne({ username: sanitize(reqUser.username) })
             .then(user => {
                 if (!user) {
                     return res.status(400).send({error: constants.INVALID_USER_DATA});
                 }
 
-                if (!user.authenticate(reqUser.password)) {
+                if (!user.authenticate(sanitize(reqUser.password))) {
                     return res.status(400).send({error: constants.INVALID_USER_DATA});
                 }
 
