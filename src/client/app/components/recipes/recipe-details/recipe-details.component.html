@@ -3,12 +3,6 @@
 </div>
 <div *ngIf="recipe">
   <div class="col-xs-12">
-    <ul *ngIf="recipe.user && recipe.user.username === getUsername()">
-      <li><a routerLink="/recipes/edit/{{recipe._id}}">Edit</a></li>
-      <li><a (click)="deleteRecipe()">Delete</a></li>
-    </ul>
-  </div>
-  <div class="col-xs-12">
     <img
       src="{{recipe.imageUrl}}"
       alt="{{recipe.title}}"
@@ -16,7 +10,14 @@
   </div>
 
   <div class="col-xs-12">
-    <h1>{{recipe.title}}%</h1>
+    <ul *ngIf="recipe.user && recipe.user.username === getUsername()">
+      <li><a routerLink="/recipes/edit/{{recipe._id}}">Edit</a></li>
+      <li><a (click)="deleteRecipe()">Delete</a></li>
+    </ul>
+  </div>
+
+  <div class="col-xs-12">
+    <h1>{{recipe.title}}</h1>
   </div>
 
   <div class="col-xs-12">
