@@ -1,7 +1,23 @@
+<h2 style="margin-left:4%">Below you can see your user information</h2>
 <div *ngIf="user$ | async as user">
-	<p>{{user.username}}</p>
-	<p>{{user.firstName}}</p>
-	<p>{{user.lastName}}</p>
-	<p>{{user.email}}</p>
-	<p>{{user.roles}}</p>
+	<div class="user-data-container">
+	<div class="data-wrap">Username: <span class="user-data">{{user.username}}</span><br></div>
+	<div class="data-wrap">First name: <span class="user-data">{{user.firstName}}</span><br></div>
+	<div class="data-wrap">Last name: <span class="user-data">{{user.lastName}}</span><br></div>
+	<div class="data-wrap">Email: <span class="user-data">{{user.email}}</span></div>
 </div>
+</div>
+<style>
+	.user-data-container{
+	display: inline-block;
+    border: 1px solid silver;
+    margin-left: 4%;
+    padding: 8px;
+    border-radius: 4px;
+	font-size: 32px;
+}
+.user-data{
+    font-weight: 600;
+    color: black;
+}
+</style>
