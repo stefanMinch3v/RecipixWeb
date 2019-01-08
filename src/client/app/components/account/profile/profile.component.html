@@ -1,3 +1,7 @@
-<p>
-  profile works! Tested - TODO
-</p>
+<div *ngIf="user$ | async as user">
+	<p>{{user.username}}</p>
+	<p>{{user.firstName}}</p>
+	<p>{{user.lastName}}</p>
+	<p>{{user.email}}</p>
+	<p>{{user.roles}}</p>
+</div>

@@ -225,3 +225,6 @@ body{
 .non-link {
   cursor: pointer;
 }
+.menu-item:hover .sub-menu{
+  z-index:10;
+}

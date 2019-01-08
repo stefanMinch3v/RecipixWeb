@@ -5,6 +5,7 @@ module.exports = (app) => {
     // account api
     app.post('/api/account/register', controllers.users.registerPost);
     app.post('/api/account/login', controllers.users.loginPost);
+    app.get('/api/account/profile/', controllers.users.getUser, auth.VerifyBearerToken, auth.HandleErrorDataForToken);
     //app.get('/api/account/logout', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.users.logout);
 
     // recipes api
@@ -17,7 +18,7 @@ module.exports = (app) => {
     app.post('/api/recipes/add-rating/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.addRating);
     app.post('/api/recipes/add-comment/:id', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.recipes.addComment);
     app.get('/api/recipes/total-number', controllers.recipes.totalNumber);
-
+    
     // ingredients api primary for search
     // TODO
 

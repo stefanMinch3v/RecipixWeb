@@ -2,6 +2,7 @@ const encryption = require('../utilities/encryption');
 const User = require('mongoose').model('User');
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
+const ObjectId = require('mongoose').Types.ObjectId;
 const sanitize = require('mongo-sanitize');
 
 // Jwt from - https://blog.angular-university.io/angular-jwt-authentication/
@@ -95,6 +96,16 @@ module.exports = {
     //     req.logout();
     //     return res.status(205).end();
     // }
+    getUser: async (req, res) =>{
+        const userId = getUserId(req.headers.authorization.split(" ")[1]);
+    
+        const user = await User.findOne(ObjectId(userId));
+        if (!user) {
+            return res.status(400).send({ error: constants.INVALID_USER_DATA });
+        }
+
+        return res.status(200).send(user);
+    }
 };
 
 function validateUserLoginData(user) { 
@@ -165,4 +176,7 @@ function getUTCDateOneHourExpirationTime() {
     date.setUTCMinutes(date.getUTCMinutes() + 60);
 
     return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+}
+function getUserId(token) {
+    return jwt.verify(token, constants.PRIVATE_KEY).sub;
 }
