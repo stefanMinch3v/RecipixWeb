@@ -363,7 +363,7 @@ function parseIngredientsData(ingredients) {
         } else {
             result = ingredients
                 .split(",")
-                .map(el => el.trim())
+                .map(el => el.trim().toLowerCase())
                 .filter(el => el); // filter here in order to remove empty entries
     
             if (result.length == 0) {

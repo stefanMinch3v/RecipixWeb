@@ -27,7 +27,7 @@ export class RecipeCreateComponent implements OnInit {
   create() {
     this.recipesService.create(this.recipeCreateModel)
       .subscribe(() => {
-        this.router.navigate(['/recipes/all?page=1']);
+        this.router.navigate(['/recipes/all']);
         this.notificationService.successMessage(notificationMessages.successCreatedRecipe);
       });
   }
