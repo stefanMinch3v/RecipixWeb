@@ -4,12 +4,14 @@
             placeholder="Search...">
         <div class="search"></div>
     </div>
-    <div *ngIf="recipes && recipes.length > 0" class="customized-container pull-right col-md-8">
+    <div *ngIf="recipes && recipes.length > 0" class="customized-container pull-right col-md-9">
         <div *ngFor="let recipe of recipes" class="col-md-12 recipe-cursor">
             <a routerLink="/recipes/details/{{recipe._id}}" (click)="clearData()" class="flex-type">
-                <img src="{{recipe.imageUrl}}" alt="{{recipe.title}}" class="img-fluid col-md-4 fixed-img">
-                <h6 class="col-md-4">Title >> {{recipe.title}}</h6>
-                <h6 class="col-md-4">Category >> {{recipe.category}}</h6>
+                <img src="{{recipe.imageUrl}}" alt="{{recipe.title}}" class="img-fluid col-md-6 fixed-img">
+                <div class="col-md-3">
+                    <h6>{{recipe.title}}</h6>
+                    <h6>{{recipe.category}}</h6>
+                </div>
             </a>
             <hr>
         </div>
