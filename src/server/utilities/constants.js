@@ -8,7 +8,7 @@ module.exports = {
     INVALID_EMAIL_ADDRESS: 'Email address must be in format example@example.example',
     INVALID_RECIPE_TITLE: 'Title must be at least 3 symbols long',
     INVALID_RECIPE_DESCRIPTION: 'Description must be at least 3 symbols long',
-    INVALID_RECIPE_CATEGORY: 'Category must be at least 3 symbols long',
+    INVALID_RECIPE_CATEGORY: 'Category must be meat, vegetarian or fruit and vegetables',
     INVALID_RECIPE_IMAGEURL: 'Image url must be at least 10 symbols long',
     INVALID_RECIPE_COOKINGTIME: 'Cooking time must be at least 1 minute',
     INVALID_RECIPE_SERVINGS: 'Servings must be at least for 1 person',

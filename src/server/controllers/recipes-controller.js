@@ -304,7 +304,8 @@ module.exports = {
 };
 
 function validateRecipesData(recipe) { 
-    const errors = {}; 
+    const errors = {};
+    const validaCategories = ["meat", "vegetarian", "fruit and vegetables"];
     let validData = true;
 
     if (!recipe.title || recipe.title.length < 3) {
@@ -317,7 +318,7 @@ function validateRecipesData(recipe) {
         errors.description = constants.INVALID_RECIPE_DESCRIPTION;
     }
 
-    if (!recipe.category || recipe.category.length < 3) {
+    if (!recipe.category || !validaCategories.includes(recipe.category.toLowerCase())) {
         validData = false; 
         errors.category = constants.INVALID_RECIPE_CATEGORY;
     }
