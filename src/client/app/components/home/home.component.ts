@@ -7,7 +7,8 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
     readonly randomImgUrl: string = 'https://www.cscassets.com/recipes/wide_cknew/wide_26291.jpg';
-    readonly randomImgUrlSecond: string = 'https://www.organicauthority.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_faces:center%2Cq_auto:good%2Cw_620/MTU5MzMwNTAyNDQ0Nzg3Mjk2/how-to-make-the-best-vegan-hasselback-potatoes.jpg';
+    readonly randomImgUrlSecond: string = 'https://w-dog.net/wallpapers/1/9/538888190084297.jpg';
+    readonly randomImgUrlThird: string = 'http://www.sabordelivery.com.br/uploads/337599-food-wallpapers.jpg';
     image: string = this.randomImgUrl;
 
     constructor() {
@@ -17,6 +18,9 @@ export class HomeComponent {
     changeBackground() {
         if (this.image === this.randomImgUrl) {
             this.image = this.randomImgUrlSecond;
+        }
+        else if (this.image === this.randomImgUrlSecond){
+            this.image = this.randomImgUrlThird;
         }
         else {
             this.image = this.randomImgUrl;
