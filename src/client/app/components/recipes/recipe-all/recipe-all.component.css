@@ -8,8 +8,7 @@ a {
 
 img {
     max-height: 150px;
-    height: 150px;
-    width: 180px;
+    height: 15em;
     border-radius: 50%;
 }
 
@@ -25,4 +24,13 @@ img {
 
 .my-spinner {
     font-size: 80px;
+}
+
+@media all and (min-width: 640px) {
+    img {
+        max-height: 150px;
+        width: 9em;
+        height: 15em;
+        border-radius: 50%;
+    }
 }
