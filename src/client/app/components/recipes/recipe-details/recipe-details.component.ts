@@ -44,11 +44,13 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   deleteRecipe() {
-    this.recipesService.delete(this.recipeId)
-      .subscribe(() => {
-        this.notificationService.successMessage(notificationMessages.successDeletedRecipe);
-        this.router.navigate(['/recipes/all?page=1']);
-      });
+    if (confirm("Are you sure to delete this recipe?")) {
+      this.recipesService.delete(this.recipeId)
+        .subscribe(() => {
+          this.notificationService.successMessage(notificationMessages.successDeletedRecipe);
+          this.router.navigate(['/recipes/all?page=1']);
+        });
+    }
   }
 
   ratingComponentClick(clickObj) {
