@@ -26,6 +26,45 @@ img {
     font-size: 80px;
 }
 
+.box {
+    transition: 0.5s;
+    -webkit-transition:0.5s;
+}
+  
+.box:hover {
+    border: 2px solid rgba(0,160,80,0);
+    color: rgb(252, 9, 9);
+}
+  
+.box::before, .box::after {
+    width: 100%;
+    height:100%;
+    z-index: 3;
+    content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    box-sizing: border-box;
+    -webkit-transform: scale(0);
+    transition: 0.5s;
+}
+
+.bar::before {
+    border-bottom: 3px solid rgb(252, 9, 9);
+    border-left: 3px solid rgb(252, 9, 9);
+    -webkit-transform-origin: 100% 0%;
+}
+  
+.bar::after {
+    border-top: 3px solid rgb(252, 9, 9);
+    border-right: 3px solid rgb(252, 9, 9);
+    -webkit-transform-origin: 0% 100%;
+}
+
+.box:hover::after, .box:hover::before {
+    -webkit-transform: scale(1);
+}
+
 @media all and (min-width: 640px) {
     img {
         max-height: 150px;

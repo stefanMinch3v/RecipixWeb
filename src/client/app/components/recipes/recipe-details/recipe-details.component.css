@@ -115,3 +115,7 @@ h2 {
   font-size: 50px;
   margin: 2px 2px 2px 2px;
 }
+
+ul {
+  list-style-type: none;
+}
