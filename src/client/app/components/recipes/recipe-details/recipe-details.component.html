@@ -2,14 +2,18 @@
   <i class="fa fa-refresh fa-spin my-spinner"></i>
 </div>
 <div *ngIf="recipe" class="col-md-12">
-  <div class="col-xs-12">
+  <div class="col-xs-12 custom-display">
     <img
       src="{{recipe.imageUrl}}"
       alt="{{recipe.title}}"
-      class="img img-fluid">
-    <ul *ngIf="recipe.user && recipe.user.username === getUsername()" class="col-md-12">
-      <li><a routerLink="/recipes/edit/{{recipe._id}}"><span class="unknown-user">Edit</span></a></li>
-      <li><a (click)="deleteRecipe()"><span class="unknown-user">Delete</span></a></li>
+      class="img img-fluid col-md-4">
+    <ul *ngIf="recipe.user && recipe.user.username === getUsername()" class="col-md-8">
+      <li>
+        <a routerLink="/recipes/edit/{{recipe._id}}"><span class="unknown-user"><i class="fa fa-edit">Edit</i></span></a>
+      </li>
+      <li>
+        <a (click)="deleteRecipe()"><span class="unknown-user"><i class="fa fa-times-circle">Delete</i></span></a>
+      </li>
     </ul>
   </div>
 
@@ -34,7 +38,13 @@
               <th><span class="description">Category</span></th>
               <th><span class="description">Cooking time</span></th>
               <th><span class="description">Servings</span></th>
-              <th><span class="description">Average ratings: {{(recipe.ratings / 2 / 10).toFixed(1)}}</span></th>
+              <th>
+                <span class="description">
+                  Average ratings: {{(recipe.ratings / 2 / 10).toFixed(1)}}
+                  <i *ngIf="(recipe.ratings / 2 / 10) >= 3" class="fa fa-smile-o"></i>
+                  <i *ngIf="(recipe.ratings / 2 / 10) < 3" class="fa fa-frown-o"></i>
+                </span>
+              </th>
               <th><span class="description">People rated</span></th>
           </tr>
       </thead>
