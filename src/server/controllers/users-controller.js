@@ -1,5 +1,8 @@
 const encryption = require('../utilities/encryption');
 const User = require('mongoose').model('User');
+const Recipe = require('mongoose').model('Recipe');
+const Rating = require('mongoose').model('Rating');
+const Comment = require('mongoose').model('Comment');
 const constants = require('../utilities/constants');
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongoose').Types.ObjectId;
@@ -96,15 +99,24 @@ module.exports = {
     //     req.logout();
     //     return res.status(205).end();
     // }
-    getUser: async (req, res) =>{
-        const userId = getUserId(req.headers.authorization.split(" ")[1]);
-    
-        const user = await User.findOne(ObjectId(userId));
-        if (!user) {
-            return res.status(400).send({ error: constants.EMPTY_USER });
-        }
+    profile: async (req, res) =>{
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
 
-        return res.status(200).send(user);
+        try {
+            const user = await User.findOne(userId);
+            if (!user) {
+                return res.status(400).send({ error: constants.EMPTY_USER });
+            }
+
+            const recipes = await Recipe.find({ user: userId });
+            const comments = await Comment.find({ user: userId });
+            const ratings = await Rating.find({ userId: userId });
+
+            const userWithData = { user, recipes, comments, ratings };
+            return res.status(200).send(userWithData);
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     }
 };
 
