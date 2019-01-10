@@ -54,7 +54,7 @@ export class RecipeDetailsComponent implements OnInit {
       });
   }
 
-  getRecipeWithoutFefresh() {
+  getRecipeWithoutRefresh() {
     this.commentInputModel = new RecipeCommentModel();
     this.recipeId = this.route.snapshot.params.id;
     setTimeout(() => 
@@ -77,7 +77,7 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipesService.addRating(this.clickedStars, this.recipeId)
       .subscribe(() => {
         this.notificationService.infoMessage(notificationMessages.successRating);
-        this.getRecipeWithoutFefresh();
+        this.getRecipeWithoutRefresh();
       });
   }
 
@@ -100,7 +100,7 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipesService.addComment(this.recipeId, this.commentInputModel)
       .subscribe(() => {
         this.notificationService.infoMessage(notificationMessages.successComment);
-        this.getRecipeWithoutFefresh();
+        this.getRecipeWithoutRefresh();
       });
   }
 
