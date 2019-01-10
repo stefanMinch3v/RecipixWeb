@@ -50,14 +50,14 @@ img {
 }
 
 .bar::before {
-    border-bottom: 3px solid rgb(252, 9, 9);
-    border-left: 3px solid rgb(252, 9, 9);
+    border-bottom: 1px solid rgb(252, 9, 9);
+    border-left: 1px solid rgb(252, 9, 9);
     -webkit-transform-origin: 100% 0%;
 }
   
 .bar::after {
-    border-top: 3px solid rgb(252, 9, 9);
-    border-right: 3px solid rgb(252, 9, 9);
+    border-top: 1px solid rgb(252, 9, 9);
+    border-right: 1px solid rgb(252, 9, 9);
     -webkit-transform-origin: 0% 100%;
 }
 
