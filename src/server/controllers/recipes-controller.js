@@ -300,7 +300,38 @@ module.exports = {
         } catch (err) {
             return res.status(400).send({ error: err.message });
         }
-    }
+    },
+    filterByCategory: async (req, res) => {
+        const categorySearch = req.query.categoryChosen;
+        const page = parseInt(req.query.page) || 1;
+        const pageSize = 6;
+
+        try {
+            const recipes = await Recipe
+                .find({ category: categorySearch })
+                .sort('dateOfAdded')
+                .skip((page - 1) * pageSize)
+                .limit(pageSize);
+
+            if (!recipes) {
+                return res.status(400).send({ error: constants.EMPTY_RECIPES });    
+            }
+
+            return res.status(200).send(recipes);
+        } catch (err) {
+            res.status(400).send({ error: err.message });
+        }
+    },
+    totalNumberForCategory: async (req, res) => {
+        const categorySearch = req.query.categoryChosen;
+
+        try {
+            const allRecipes = await Recipe.countDocuments({ category: categorySearch });
+            return res.status(200).send(String(allRecipes));
+        } catch (err) {
+            res.status(400).send({ error: err.message });
+        }
+    },
 };
 
 function validateRecipesData(recipe) { 

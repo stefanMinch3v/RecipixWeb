@@ -22,6 +22,11 @@ export class RecipesService {
         return this.http.get(url).pipe(map((res: Response) => Number(res)));
     }
 
+    countTotalForCategory(categoryChosen): Observable<number> {
+        const url = environment.localhost.url + `/recipes/total-number-for-category?categoryChosen=${categoryChosen}`;
+        return this.http.get(url).pipe(map((res: Response) => Number(res)));
+    }
+
     create(createModel: RecipeFormModel) {
         const url = environment.localhost.url + '/recipes/create';
         return this.http.post(url, createModel);
@@ -29,6 +34,11 @@ export class RecipesService {
 
     getAll(page): Observable<RecipeAllViewModel[]> {
         const url = environment.localhost.url + `/recipes/all?page=${page}`;
+        return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
+    }
+
+    filterByCategory(categoryChosen, page): Observable<RecipeAllViewModel[]> {
+        const url = environment.localhost.url + `/recipes/filter-by-category?categoryChosen=${categoryChosen}&page=${page}`;
         return this.http.get(url).pipe(map((res: Response) => Object.values(res)));
     }
 
