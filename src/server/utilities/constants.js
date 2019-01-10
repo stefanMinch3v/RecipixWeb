@@ -19,6 +19,7 @@ module.exports = {
     NOT_FOUND_RECIPE_AND_USER: 'No such recipe or author of it',
     ALREADY_VOTED_RECIPE: 'You have already voted for this recipe',
     EMPTY_RECIPES: 'There aren`t any recipes',
+    EMPTY_USER: 'No such user found.',
     EMPTY_INGREDIENTS_COLLECTION: 'Ingredients cannot be empty',
     DUPLICATE_USERNAME_OR_EMAIL: 'Username or email already exist in the database.',
     DUPLICATE_KEY_DB: 'duplicate key',

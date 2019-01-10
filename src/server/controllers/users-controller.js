@@ -101,7 +101,7 @@ module.exports = {
     
         const user = await User.findOne(ObjectId(userId));
         if (!user) {
-            return res.status(400).send({ error: constants.INVALID_USER_DATA });
+            return res.status(400).send({ error: constants.EMPTY_USER });
         }
 
         return res.status(200).send(user);
@@ -177,6 +177,7 @@ function getUTCDateOneHourExpirationTime() {
 
     return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 }
+
 function getUserId(token) {
     return jwt.verify(token, constants.PRIVATE_KEY).sub;
 }
