@@ -35,7 +35,7 @@
 		<div class="col-md-10" *ngIf="showSpinnerRecipes && seeRecipes === false">
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
-		<p *ngIf="seeRecipes && (!user.recipes || user.recipes.length === 0)">None</p>
+		<h5 class="col-md-12 empty-elements" *ngIf="seeRecipes && (!user.recipes || user.recipes.length === 0)">None</h5>
 		<table *ngIf="seeRecipes && user.recipes.length > 0" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -63,7 +63,7 @@
 		<div class="col-md-10" *ngIf="showSpinnerComments && seeComments === false">
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
-		<p *ngIf="seeComments && (!user.comments || user.comments.length === 0)">None</p>
+		<h5 class="col-md-12 empty-elements" *ngIf="seeComments && (!user.comments || user.comments.length === 0)">None</h5>
 		<table *ngIf="seeComments && user.comments.length > 0" class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -92,7 +92,7 @@
 		<div class="col-md-10" *ngIf="showSpinnerRatings && seeRatings === false">
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
-		<p *ngIf="seeRatings && (!user.ratings || user.ratings.length === 0)">None</p>
+		<h5 class="col-md-12 empty-elements" *ngIf="seeRatings && (!user.ratings || user.ratings.length === 0)">None</h5>
 		<table *ngIf="seeRatings && user.ratings.length > 0" class="table table-bordered table-hover">
 			<thead>
 				<tr>
