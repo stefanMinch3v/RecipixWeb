@@ -10,8 +10,8 @@ a {
     justify-content: center;
 }
 img {
-    height: 150px !important;
-    width:150px !important;
+    height: 15em;
+    width: 9em;
     border-radius: 50%;
     padding-bottom:8px;
 }
@@ -59,14 +59,14 @@ img {
 }
 
 .bar::before {
-    border-bottom: 1px solid rgb(252, 9, 9);
-    border-left: 1px solid rgb(252, 9, 9);
+    border-bottom: 2px solid rgb(252, 9, 9);
+    border-left: 2px solid rgb(252, 9, 9);
     -webkit-transform-origin: 100% 0%;
 }
   
 .bar::after {
-    border-top: 1px solid rgb(252, 9, 9);
-    border-right: 1px solid rgb(252, 9, 9);
+    border-top: 2px solid rgb(252, 9, 9);
+    border-right: 2px solid rgb(252, 9, 9);
     -webkit-transform-origin: 0% 100%;
 }
 
