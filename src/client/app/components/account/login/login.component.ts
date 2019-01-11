@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AccountService } from '../../../core/services/account/account.service';
 import { AuthService } from '../../../core/services/auth.service';
@@ -15,15 +15,18 @@ import { notificationMessages } from '../../../core/constants/notification-messa
 })
 export class LoginComponent implements OnInit {
     private user: AccountLoginModel;
+    private returnUrl: string;
 
     constructor(
         private accountService: AccountService,
         private authService: AuthService,
         private router: Router,
+        private route: ActivatedRoute,
         private notificationService: NotificationService) { }
 
     ngOnInit() {
         this.user = new AccountLoginModel();
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     public login(): void {
@@ -35,7 +38,7 @@ export class LoginComponent implements OnInit {
                 this.authService.saveExpirationTime(res['expiration']);
                 
                 this.notificationService.successMessage(notificationMessages.successLogin);
-                this.router.navigate(['/']);
+                this.router.navigateByUrl(this.returnUrl);
             });
     }
 }
