@@ -27,6 +27,16 @@ export class AccountService {
         this.authService.deauthenticateUser();
     }
 
+    public editGet() {
+        const url = environment.localhost.url + '/account/edit';
+        return this.http.get(url);
+    }
+
+    public editPost(user) {
+        const url = environment.localhost.url + '/account/edit';
+        return this.http.post(url, user);
+    }
+
     public getUser(): Observable<AccountProfileViewModel>{
         const url = environment.localhost.url + '/account/profile';
         return this.http.get<AccountProfileViewModel>(url);

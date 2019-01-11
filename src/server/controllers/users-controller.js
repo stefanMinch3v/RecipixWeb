@@ -103,10 +103,12 @@ module.exports = {
         const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
 
         try {
-            const user = await User.findOne(userId);
+            let user = await User.findOne(userId);
             if (!user) {
                 return res.status(400).send({ error: constants.EMPTY_USER });
             }
+
+            user = filterUserModel(user);
 
             let recipes = await Recipe.find({ user: userId });
             recipes = filterRecipesModel(recipes);
@@ -124,8 +126,65 @@ module.exports = {
         } catch (err) {
             return res.status(400).send({ error: err.message });
         }
+    },
+    editGet: async (req, res) => {
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
+
+        try {
+            let user = await User.findOne(userId);
+            if (!user) {
+                return res.status(400).send({ error: constants.EMPTY_USER });
+            }
+
+            user = filterUserModel(user);
+            
+            return res.status(200).send(user);
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
+    },
+    editPost: async (req, res) => {
+        const userId = ObjectId(getUserId(req.headers.authorization.split(" ")[1]));
+        let reqUser = req.body;
+
+        const userValidationInfo = validateUserRegisterData(reqUser);
+        if (!userValidationInfo.success) {
+            return res.status(400).send(userValidationInfo.errors);
+        }
+
+        let salt = encryption.generateSalt();
+        let hashedPassword = encryption.generateHashedPassword(salt, reqUser.password);
+
+        try {
+            let user = await User.findById(userId);
+            if (!user) {
+                return res.status(400).send({ error: constants.EMPTY_USER });
+            }
+
+            user.username = reqUser.username;
+            user.firstName = reqUser.firstName;
+            user.lastName = reqUser.lastName;
+            user.email = reqUser.email;
+            user.salt = salt;
+            user.hashedPass = hashedPassword;
+
+            await user.save();
+
+            return res.status(200).end();
+        } catch (err) {
+            return res.status(400).send({ error: err.message });
+        }
     }
 };
+
+function filterUserModel(user) { 
+    return {
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+    };
+}
 
 function filterCommentsModel(recipeWithComments) {
     recipeWithComments = recipeWithComments.filter(r => r.comments.length > 0);

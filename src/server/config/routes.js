@@ -6,6 +6,8 @@ module.exports = (app) => {
     app.post('/api/account/register', controllers.users.registerPost);
     app.post('/api/account/login', controllers.users.loginPost);
     app.get('/api/account/profile/', controllers.users.profile, auth.VerifyBearerToken, auth.HandleErrorDataForToken);
+    app.get('/api/account/edit', controllers.users.editGet, auth.VerifyBearerToken, auth.HandleErrorDataForToken);
+    app.post('/api/account/edit', controllers.users.editPost, auth.VerifyBearerToken, auth.HandleErrorDataForToken);
     //app.get('/api/account/logout', auth.VerifyBearerToken, auth.HandleErrorDataForToken, controllers.users.logout);
 
     // recipes api

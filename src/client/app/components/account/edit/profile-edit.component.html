@@ -1,0 +1,98 @@
+<h3>Edit</h3>
+<form #editForm="ngForm" (submit)="edit()" class="col-md-4">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input class="form-control"
+               type="text"
+               minlength="5"
+               id="username"
+               name="username"
+               #username="ngModel"
+               [(ngModel)]="user.username"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="username.valid || username.pristine">
+        Username must be at least 5 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="firstName">First name:</label>
+        <input class="form-control"
+               type="text"
+               minlength="2"
+               id="firstName"
+               name="firstName"
+               #firstName="ngModel"
+               [(ngModel)]="user.firstName"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="firstName.valid || firstName.pristine">
+        First name must be at least 2 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="lastName">Last name:</label>
+        <input class="form-control"
+               type="text"
+               minlength="2"
+               id="lastName"
+               name="lastName"
+               #lastName="ngModel"
+               [(ngModel)]="user.lastName"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="lastName.valid || lastName.pristine">
+        Last name must be at least 2 symbols long!
+    </div>
+
+    <div class="form-group"> 
+        <label for="email">Email:</label>
+        <input class="form-control"
+               pattern="\S+@\S+\.\S+"
+               type="text"
+               id="email"
+               name="email"
+               #email="ngModel"
+               [(ngModel)]="user.email"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="!email.errors?.pattern || email.pristine">
+        Email format is example@example.example
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input class="form-control"
+               type="password"
+               minlength="5"
+               id="password"
+               name="password"
+               #password="ngModel"
+               [(ngModel)]="user.password"
+               required />
+    </div>
+    <div class="alert text-danger" [hidden]="password.valid || password.pristine">
+        Password must be at least 5 symbols long!
+    </div>
+
+    <div class="form-group">
+        <label for="passwordConfirmation">Confirm Password:</label>
+        <input class="form-control"
+               type="password"
+               id="passwordConfirmation"
+               name="passwordConfirmation"
+               #passwordConfirmation="ngModel"
+               [(ngModel)]="user.passwordConfirmation"
+               required />
+    </div>
+    <div 
+        class="alert text-danger" 
+        [hidden]="passwordConfirmation.pristine || (user.passwordConfirmation == user.password)">
+        Passwords do not match!
+    </div>
+
+    <button type="submit" class="btn btn-primary"
+            [disabled]="!editForm.form.valid || (user.passwordConfirmation != user.password)">
+        Submit
+    </button>
+</form>
