@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row col-md-12 col-lg-12 recipes-row">
   <div class="col-md-10 center-spinner" *ngIf="!recipes$">
     <i class="fa fa-refresh fa-spin my-spinner"></i>
   </div>
@@ -8,7 +8,7 @@
       totalItems: totalRecipes
   }" class="col-xs-12 image-container col-md-3">
     <a routerLink="/recipes/details/{{recipe._id}}" class="list-group-item clearfix box bar">
-      <div class="col-md-4 col-sm-4 col-xs-4">
+      <div class="">
         <img src="{{recipe.imageUrl}}" alt="{{recipe.title}}" class="img-responsive">
         <h4 class="list-group-item-heading">{{recipe.title}}</h4>
         <hr >

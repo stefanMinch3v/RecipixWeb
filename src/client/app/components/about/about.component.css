@@ -4,3 +4,6 @@ ul {
 li {
     display: inline;
 }
+.about-row{
+    padding: 0 16px;
+}

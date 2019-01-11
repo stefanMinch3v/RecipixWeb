@@ -5,11 +5,15 @@
 a {
     cursor: pointer;
 }
-
+.recipes-row{
+    text-align: center;
+    justify-content: center;
+}
 img {
-    max-height: 150px;
-    height: 15em;
+    height: 150px !important;
+    width:150px !important;
     border-radius: 50%;
+    padding-bottom:8px;
 }
 
 .description {
@@ -29,11 +33,16 @@ img {
 .box {
     transition: 0.5s;
     -webkit-transition:0.5s;
+    box-shadow: 1px 1px 3px 1px silver;
+    border-radius: 4px;
+    min-height:400px;
+
 }
   
 .box:hover {
     border: 2px solid rgba(0,160,80,0);
     color: rgb(252, 9, 9);
+    box-shadow:none !important;
 }
   
 .box::before, .box::after {
