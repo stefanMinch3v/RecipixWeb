@@ -4,6 +4,8 @@ export class AccountProfileViewModel {
         public firstName?: string,
         public lastName?: string,
         public email?: string,
-        public roles?: [string]
+        public recipes?: string[any],
+        public ratings?: string[any],
+        public comments?: string[any]
     ) { }
 }

@@ -108,9 +108,16 @@ module.exports = {
                 return res.status(400).send({ error: constants.EMPTY_USER });
             }
 
-            const recipes = await Recipe.find({ user: userId });
-            const comments = await Comment.find({ user: userId });
-            const ratings = await Rating.find({ userId: userId });
+            let recipes = await Recipe.find({ user: userId });
+            recipes = filterRecipesModel(recipes);
+
+            let comments = await Recipe
+                .find()
+                .populate({ path: 'comments', match: { user: userId }});
+            comments = filterCommentsModel(comments);
+
+            let ratings = await Rating.find({ userId: userId });
+            ratings = filterRatingModel(ratings);
 
             const userWithData = { user, recipes, comments, ratings };
             return res.status(200).send(userWithData);
@@ -119,6 +126,36 @@ module.exports = {
         }
     }
 };
+
+function filterCommentsModel(recipeWithComments) {
+    recipeWithComments = recipeWithComments.filter(r => r.comments.length > 0);
+
+    return recipeWithComments.map(r => {
+        return {
+            recipeId: r._id,
+            comments: r.comments.map(c => c.content)
+        };
+    });
+}
+
+function filterRatingModel(rating) {
+    return rating.map(el => {
+        return { 
+            recipeId: el.recipeId,
+            rating: el.rating
+        };
+    });
+}
+
+function filterRecipesModel(recipes) {
+    return recipes.map(el => {
+        return { 
+            _id: el._id,
+            title: el.title,
+            imageUrl: el.imageUrl
+        };
+    });
+}
 
 function validateUserLoginData(user) { 
     const errors = {}; 

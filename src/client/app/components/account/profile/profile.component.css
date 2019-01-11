@@ -1,0 +1,23 @@
+img {
+    max-height: 150px;
+    height: 15em;
+    border-radius: 50%;
+}
+
+.center-spinner {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.my-spinner {
+    font-size: 80px;
+}
+
+.fixed-position {
+    display: inline;
+}
+
+.my-custom-spinner {
+    font-size: 50px;
+    margin: 2px 2px 2px 2px;
+}
