@@ -32,7 +32,8 @@
   <div class="table">
 
   </div>
-  <table class="table table-bordered uk-table-hover">
+  <div class="table-responsive">
+    <table class="table table-bordered uk-table-hover">
       <thead>
           <tr>
               <th><span class="description">Category</span></th>
@@ -62,7 +63,8 @@
               <th>{{recipe.peopleRated}}</th>
           </tr>
       </tbody>
-  </table>
+    </table>
+  </div>
 
   <div class="col-xs-12">
     <div *ngIf="isUserAuth()">

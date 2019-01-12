@@ -5,26 +5,28 @@
 </ng-template>
 <div *ngIf="user$ | async as user; else loading">
 	<h2><i class="fa fa-info-circle" aria-hidden="true"></i>User {{user.user.username}} - personal information:</h2>
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Username</th>
-				<th>First name</th>
-				<th>Last name</th>
-				<th>Email</th>
-				<th>Operations</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>{{user.user.username}}</td>
-				<td>{{user.user.firstName}}</td>
-				<td>{{user.user.lastName}}</td>
-				<td>{{user.user.email}}</td>
-				<td><a routerLink="/account/profile/edit" class="btn btn-primary">Edit</a></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>First name</th>
+					<th>Last name</th>
+					<th>Email</th>
+					<th>Operations</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{user.user.username}}</td>
+					<td>{{user.user.firstName}}</td>
+					<td>{{user.user.lastName}}</td>
+					<td>{{user.user.email}}</td>
+					<td><a routerLink="/account/profile/edit" class="btn btn-primary">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 	<div>
 		<h4><i class="fa fa-table" aria-hidden="true"></i>Author of recipes:</h4>
@@ -36,22 +38,24 @@
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
 		<h5 class="col-md-12 empty-elements" *ngIf="seeRecipes && (!user.recipes || user.recipes.length === 0)">None</h5>
-		<table *ngIf="seeRecipes && user.recipes.length > 0" class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Image</th>
-					<th>Info</th>
-				</tr>
-			</thead>
-			<tbody *ngFor="let recipe of user.recipes">
-				<tr>
-					<td>{{recipe.title}}</td>
-					<td><img src="{{recipe.imageUrl}}" class="img-responsive"></td>
-					<td><a routerLink="/recipes/details/{{recipe._id}}" class="btn btn-info">Details</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table *ngIf="seeRecipes && user.recipes.length > 0" class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Image</th>
+						<th>Info</th>
+					</tr>
+				</thead>
+				<tbody *ngFor="let recipe of user.recipes">
+					<tr>
+						<td>{{recipe.title}}</td>
+						<td><img src="{{recipe.imageUrl}}" class="img-responsive"></td>
+						<td><a routerLink="/recipes/details/{{recipe._id}}" class="btn btn-info">Details</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<hr>
 	<div>
@@ -64,23 +68,25 @@
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
 		<h5 class="col-md-12 empty-elements" *ngIf="seeComments && (!user.comments || user.comments.length === 0)">None</h5>
-		<table *ngIf="seeComments && user.comments.length > 0" class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>Content</th>
-					<th>Info</th>
-				</tr>
-			</thead>
-			<tbody *ngFor="let comment of user.comments">
-				<tr>
-					<td>
-						<p>Number of comments added: {{comment.comments.length}}</p>
-						<span *ngFor="let content of comment.comments; index as i">{{i + 1}}<i class="fa fa-arrow-right" aria-hidden="true"></i>{{content}}</span>
-					</td>
-					<td><a routerLink="/recipes/details/{{comment.recipeId}}" class="btn btn-info">Details</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table *ngIf="seeComments && user.comments.length > 0" class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Content</th>
+						<th>Info</th>
+					</tr>
+				</thead>
+				<tbody *ngFor="let comment of user.comments">
+					<tr>
+						<td>
+							<p>Number of comments added: {{comment.comments.length}}</p>
+							<span *ngFor="let content of comment.comments; index as i">{{i + 1}}<i class="fa fa-arrow-right" aria-hidden="true"></i>{{content}}</span>
+						</td>
+						<td><a routerLink="/recipes/details/{{comment.recipeId}}" class="btn btn-info">Details</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	<hr>
 	<div>
@@ -93,24 +99,26 @@
 			<i class="fa fa-refresh fa-spin my-custom-spinner"></i>
 		</div>
 		<h5 class="col-md-12 empty-elements" *ngIf="seeRatings && (!user.ratings || user.ratings.length === 0)">None</h5>
-		<table *ngIf="seeRatings && user.ratings.length > 0" class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>Rating</th>
-					<th>Info</th>
-				</tr>
-			</thead>
-			<tbody *ngFor="let rating of user.ratings">
-				<tr>
-					<td>
-						Rated:
-						<i *ngIf="rating.rating >= 3" class="fa fa-smile-o fa-3x"></i>
-						<i *ngIf="rating.rating < 3" class="fa fa-frown-o fa-3x"></i>
-						({{rating.rating}})
-					</td>
-					<td><a routerLink="/recipes/details/{{rating.recipeId}}" class="btn btn-info">Details</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table *ngIf="seeRatings && user.ratings.length > 0" class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Rating</th>
+						<th>Info</th>
+					</tr>
+				</thead>
+				<tbody *ngFor="let rating of user.ratings">
+					<tr>
+						<td>
+							Rated:
+							<i *ngIf="rating.rating >= 3" class="fa fa-smile-o fa-3x"></i>
+							<i *ngIf="rating.rating < 3" class="fa fa-frown-o fa-3x"></i>
+							({{rating.rating}})
+						</td>
+						<td><a routerLink="/recipes/details/{{rating.recipeId}}" class="btn btn-info">Details</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
