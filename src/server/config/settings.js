@@ -17,6 +17,8 @@ module.exports = {
     staging: {
     },
     production: {
-        port: process.env.PORT
+        port: process.env.PORT,
+        rootPath: rootPath,
+        db: `mongodb://${parsedData.dbUsername}:${parsedData.dbPassword}@ds125422.mlab.com:25422/recipix-db`
     }
 };
