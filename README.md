@@ -1,4 +1,5 @@
-# RecipixWeb
+# RecipixWeb - https://recipix.herokuapp.com
+
 * Sixth semester project based on MEAN stack
 
 * Angular 6.1
