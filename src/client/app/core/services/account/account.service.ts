@@ -14,12 +14,12 @@ export class AccountService {
         private authService: AuthService) { }
 
     public login(user) {
-        const url = environment.localhost.url + '/account/login';
+        const url = environment.host.url + '/account/login';
         return this.http.post(url, user);
     }
 
     public register(user) {
-        const url = environment.localhost.url + '/account/register';
+        const url = environment.host.url + '/account/register';
         return this.http.post(url, user);
     }
 
@@ -28,17 +28,17 @@ export class AccountService {
     }
 
     public editGet() {
-        const url = environment.localhost.url + '/account/edit';
+        const url = environment.host.url + '/account/edit';
         return this.http.get(url);
     }
 
     public editPost(user) {
-        const url = environment.localhost.url + '/account/edit';
+        const url = environment.host.url + '/account/edit';
         return this.http.post(url, user);
     }
 
     public getUser(): Observable<AccountProfileViewModel>{
-        const url = environment.localhost.url + '/account/profile';
+        const url = environment.host.url + '/account/profile';
         return this.http.get<AccountProfileViewModel>(url);
     }
 }

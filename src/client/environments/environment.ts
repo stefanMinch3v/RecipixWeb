@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    localhost: {
+    host: {
         url: 'http://localhost:1337/api'
     },
     toastr: {
