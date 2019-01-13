@@ -1,58 +1,62 @@
-﻿<nav class="menu">
-    <ol>
-        <li class="menu-item">
-            <a routerLink="/">Home</a>
-        </li>
-        <li class="menu-item">
-            <a routerLink="/about">About</a>
-        </li>
-        <li class="menu-item">
-            <a class="non-link">Recipes</a>
-            <ol class="sub-menu">
-                <li class="menu-item">
-                    <a routerLink="/recipes/create">Submit new</a>
-                </li>
-                <li class="menu-item">
-                    <a routerLink="/recipes/all">All</a>
-                </li>
-            </ol>
-        </li>
-        <li class="menu-item">
-            <a class="non-link">Categories</a>
-            <ol class="sub-menu">
-                <li class="menu-item">
-                    <a routerLink="/recipes/all/vegetarian">Vegetarian</a>
-                </li>
-                <li class="menu-item">
-                    <a routerLink="/recipes/all/meat">Meat</a>
-                </li>
-                <li class="menu-item">
-                    <a routerLink="/recipes/all/fruitAndVegetables">Fruit and vegetables</a>
-                </li>
-            </ol>
-        </li>
-        <li class="menu-item" *ngIf="!isUserAuth()">
-            <a class="non-link">Account</a>
-            <ol class="sub-menu">
-                <li class="menu-item">
-                    <a routerLink="/account/login">Login</a>
-                </li>
-                <li class="menu-item">
-                    <a routerLink="/account/register">Register</a>
-                </li>
-            </ol>
-        </li>
-        <li class="menu-item" *ngIf="isUserAuth()">
-            <a class="non-link">Hello, {{authService.getUser()}}</a>
-            <ol class="sub-menu">
-                <li class="menu-item">
-                    <a routerLink="account/profile">Profile</a>
-                </li>
-                <li class="menu-item">
-                    <a (click)="logout()" routerLink="">Logout</a>
-                </li>
-            </ol>
-        </li>
-    </ol>
-</nav>
+﻿<div (window:resize)="onResize($event)">
+    <nav *ngIf="!isMobile" class="menu">
+        <ol>
+            <li class="menu-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="menu-item">
+                <a routerLink="/about">About</a>
+            </li>
+            <li class="menu-item">
+                <a class="non-link">Recipes</a>
+                <ol class="sub-menu">
+                    <li class="menu-item">
+                        <a routerLink="/recipes/create">Submit new</a>
+                    </li>
+                    <li class="menu-item">
+                        <a routerLink="/recipes/all">All</a>
+                    </li>
+                </ol>
+            </li>
+            <li class="menu-item">
+                <a class="non-link">Categories</a>
+                <ol class="sub-menu">
+                    <li class="menu-item">
+                        <a routerLink="/recipes/all/vegetarian">Vegetarian</a>
+                    </li>
+                    <li class="menu-item">
+                        <a routerLink="/recipes/all/meat">Meat</a>
+                    </li>
+                    <li class="menu-item">
+                        <a routerLink="/recipes/all/fruitAndVegetables">Fruit and vegetables</a>
+                    </li>
+                </ol>
+            </li>
+            <li class="menu-item" *ngIf="!isUserAuth()">
+                <a class="non-link">Account</a>
+                <ol class="sub-menu">
+                    <li class="menu-item">
+                        <a routerLink="/account/login">Login</a>
+                    </li>
+                    <li class="menu-item">
+                        <a routerLink="/account/register">Register</a>
+                    </li>
+                </ol>
+            </li>
+            <li class="menu-item" *ngIf="isUserAuth()">
+                <a class="non-link">Hello, {{authService.getUser()}}</a>
+                <ol class="sub-menu">
+                    <li class="menu-item">
+                        <a routerLink="account/profile">Profile</a>
+                    </li>
+                    <li class="menu-item">
+                        <a (click)="logout()" routerLink="">Logout</a>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </nav>
+    <mobile-menu *ngIf="isMobile"></mobile-menu>
+</div>
+
 <app-search></app-search>

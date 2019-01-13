@@ -13,6 +13,8 @@ import { notificationMessages } from '../../../core/constants/notification-messa
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+    isMobile: boolean = false;
+
     constructor(
         private accountService: AccountService,
         private authService: AuthService,
@@ -30,5 +32,15 @@ export class HeaderComponent {
 
     private isUserAdm(): boolean {
         return this.roleService.isUserAdmin();
+    }
+
+    private onResize(event) {
+        const screenSize = event.target.innerWidth;
+        if (screenSize < 720) {
+            this.isMobile = true;
+        } 
+        else {
+            this.isMobile = false;
+        }
     }
 }
