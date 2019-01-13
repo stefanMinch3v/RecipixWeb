@@ -136,8 +136,7 @@
     color: white;
   }
   @media screen and (max-width: 720px) {
-    .search-container{
-     position:absolute;
-    top:125px;
+    .col-md-5.pull-right{
+    position:fixed;
     }
   }
