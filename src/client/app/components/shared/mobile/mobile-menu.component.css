@@ -47,3 +47,7 @@
 .non-link {
     cursor: pointer;
 }
+
+a {
+    text-transform: uppercase;
+}
